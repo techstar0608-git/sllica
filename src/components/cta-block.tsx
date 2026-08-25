@@ -18,7 +18,7 @@ export function CtaBlock() {
             </p>
             <p className="mt-6 text-lg">
               Hoặc gọi trực tiếp{" "}
-              <a href={site.hotlineHref} className="font-bold text-white underline">
+              <a href={site.hotlineHref} className="inline-flex min-h-11 items-center font-bold text-white underline">
                 {site.hotline}
               </a>
             </p>

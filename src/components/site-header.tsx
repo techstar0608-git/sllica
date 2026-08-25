@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { products } from "@/content/products";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
 import { Container } from "./ui";
@@ -16,22 +18,31 @@ export function SiteHeader() {
         <div className="flex h-16 items-center justify-between gap-4 lg:h-20">
           <Link
             href="/"
-            className="text-xl font-bold tracking-tight text-brand-700"
             onClick={() => setOpen(false)}
+            aria-label={site.name}
+            className="inline-flex min-h-11 items-center"
           >
-            {site.name}
+            <Image
+              src="/img/logo-silica.png"
+              alt={site.name}
+              width={1899}
+              height={828}
+              priority
+              className="h-8 w-auto lg:h-10"
+            />
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex" aria-label="Menu chính">
             <NavLink href="/">Trang chủ</NavLink>
             <ServicesMenu />
+            <ProductsMenu />
             <NavLink href="/dang-ky-khao-sat">Khảo sát vườn</NavLink>
           </nav>
 
           <div className="flex items-center gap-3">
             <a
               href={site.hotlineHref}
-              className="hidden text-base font-semibold text-brand-700 sm:block"
+              className="hidden min-h-11 items-center text-base font-semibold text-brand-700 sm:inline-flex"
             >
               {site.hotline}
             </a>
@@ -72,6 +83,19 @@ export function SiteHeader() {
                   indented
                 >
                   {s.navName}
+                </MobileLink>
+              ))}
+              <MobileLink href="/san-pham" onClick={() => setOpen(false)}>
+                Sản phẩm K-SON
+              </MobileLink>
+              {products.map((p) => (
+                <MobileLink
+                  key={p.slug}
+                  href={`/san-pham/${p.slug}`}
+                  onClick={() => setOpen(false)}
+                  indented
+                >
+                  {p.name}
                 </MobileLink>
               ))}
               <MobileLink href="/dang-ky-khao-sat" onClick={() => setOpen(false)}>
@@ -150,7 +174,7 @@ function ServicesMenu() {
               <span className="block font-semibold text-brand-900">
                 {s.navName}
               </span>
-              <span className="mt-0.5 block text-sm text-muted">
+              <span className="mt-0.5 block text-muted">
                 {s.cardSummary}
               </span>
             </Link>
@@ -160,6 +184,51 @@ function ServicesMenu() {
             className="block rounded-xl px-4 py-3 text-base font-semibold text-brand-600 hover:bg-brand-50"
           >
             Xem tất cả dịch vụ →
+          </Link>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+/** Dropdown: 5 sản phẩm + link "Xem toàn bộ catalog". */
+function ProductsMenu() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <Link
+        href="/san-pham"
+        className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-base font-medium text-ink hover:bg-brand-50 hover:text-brand-700"
+        onFocus={() => setOpen(true)}
+      >
+        Sản phẩm
+        <span aria-hidden="true" className="text-xs">
+          ▾
+        </span>
+      </Link>
+      {open ? (
+        <div className="absolute top-full left-0 w-[24rem] rounded-2xl border border-line bg-white p-2 shadow-lg">
+          {products.map((p) => (
+            <Link
+              key={p.slug}
+              href={`/san-pham/${p.slug}`}
+              className="block rounded-xl px-4 py-3 hover:bg-brand-50"
+            >
+              <span className="block font-semibold text-brand-900">{p.name}</span>
+              <span className="mt-0.5 block text-muted">
+                {p.keyComposition}
+              </span>
+            </Link>
+          ))}
+          <Link
+            href="/san-pham"
+            className="block rounded-xl px-4 py-3 text-base font-semibold text-brand-600 hover:bg-brand-50"
+          >
+            Xem toàn bộ catalog →
           </Link>
         </div>
       ) : null}

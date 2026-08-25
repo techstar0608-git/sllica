@@ -95,7 +95,7 @@ export function SurveyForm({
 
       <SubmitButton />
 
-      <p className="text-sm text-muted">
+      <p className="text-muted">
         Khảo sát miễn phí, không ép mua. Thông tin vườn của bạn được bảo mật.
       </p>
     </form>
@@ -150,7 +150,7 @@ function Field({
         {...rest}
       />
       {error ? (
-        <span id={errorId} role="alert" className="mt-1 block text-sm text-warn">
+        <span id={errorId} role="alert" className="mt-1 block text-warn">
           {error}
         </span>
       ) : null}

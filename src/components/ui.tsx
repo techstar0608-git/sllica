@@ -52,7 +52,7 @@ export function SectionHeading({
     >
       {eyebrow ? (
         <p
-          className={`mb-2 text-sm font-semibold tracking-wide uppercase ${
+          className={`mb-2 text-base font-semibold tracking-wide uppercase ${
             isDark ? "text-brand-300" : "text-brand-600"
           }`}
         >
@@ -128,17 +128,22 @@ export function Breadcrumb({
   trail: { label: string; href?: string }[];
 }) {
   return (
-    <nav aria-label="Breadcrumb" className="text-sm">
+    <nav aria-label="Breadcrumb" className="text-base">
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-muted">
         {trail.map((item, i) => (
           <li key={item.label} className="flex items-center gap-2">
             {i > 0 ? <span aria-hidden="true">›</span> : null}
             {item.href ? (
-              <Link href={item.href} className="hover:text-brand-600 hover:underline">
+              <Link
+                href={item.href}
+                className="inline-flex min-h-11 items-center hover:text-brand-600 hover:underline"
+              >
                 {item.label}
               </Link>
             ) : (
-              <span className="text-ink">{item.label}</span>
+              <span className="inline-flex min-h-11 items-center text-ink">
+                {item.label}
+              </span>
             )}
           </li>
         ))}
@@ -166,7 +171,7 @@ export function DataTable({
               <th
                 key={h}
                 scope="col"
-                className="px-4 py-3 text-sm font-semibold text-brand-900"
+                className="px-4 py-3 font-semibold text-brand-900"
               >
                 {h}
               </th>
@@ -207,7 +212,7 @@ export function StatusTag({ value }: { value: string }) {
   const pending = value.toLowerCase().includes("đang hoàn tất");
   return (
     <span
-      className={`inline-block rounded-full px-3 py-1 text-sm font-medium ${
+      className={`inline-block rounded-full px-3 py-1.5 font-medium ${
         pending
           ? "bg-amber-100 text-amber-900"
           : "bg-brand-100 text-brand-700"

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
@@ -10,7 +11,15 @@ export function SiteFooter() {
       <Container className="py-12 sm:py-16">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <p className="text-xl font-bold text-white">{site.name}</p>
+            <span className="inline-flex rounded-lg bg-white px-4 py-3">
+              <Image
+                src="/img/logo-silica.png"
+                alt={site.name}
+                width={1899}
+                height={828}
+                className="h-8 w-auto"
+              />
+            </span>
             <p className="mt-3 text-base leading-relaxed">
               Nhà phân phối độc quyền bộ sản phẩm K-SON tại Việt Nam. Đội kỹ
               thuật đồng hành cùng chủ vườn sầu riêng Tây Nguyên.
@@ -26,15 +35,20 @@ export function SiteFooter() {
                 <li key={s.slug}>
                   <Link
                     href={`/dich-vu/${s.slug}`}
-                    className="hover:text-white hover:underline"
+                    className="inline-flex min-h-11 items-center hover:text-white hover:underline"
                   >
                     {s.navName}
                   </Link>
                 </li>
               ))}
               <li>
-                <Link href="/dich-vu" className="hover:text-white hover:underline">
+                <Link href="/dich-vu" className="inline-flex min-h-11 items-center hover:text-white hover:underline">
                   Tổng quan dịch vụ
+                </Link>
+              </li>
+              <li>
+                <Link href="/san-pham" className="inline-flex min-h-11 items-center hover:text-white hover:underline">
+                  Sản phẩm K-SON
                 </Link>
               </li>
             </ul>
@@ -46,13 +60,13 @@ export function SiteFooter() {
               <li>
                 <a
                   href={site.hotlineHref}
-                  className="text-lg font-semibold text-white hover:underline"
+                  className="inline-flex min-h-11 items-center text-lg font-semibold text-white hover:underline"
                 >
                   {site.hotline}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${site.email}`} className="hover:text-white hover:underline">
+                <a href={`mailto:${site.email}`} className="inline-flex min-h-11 items-center hover:text-white hover:underline">
                   {site.email}
                 </a>
               </li>
@@ -80,7 +94,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-white/15 pt-6 text-sm">
+        <div className="mt-10 border-t border-white/15 pt-6">
           <p>
             {site.legalName} · MST {site.taxCode} · © 2026 {site.name}
           </p>

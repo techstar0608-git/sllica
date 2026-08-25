@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { CtaBlock } from "@/components/cta-block";
+import { ProductCard } from "@/components/product-card";
 import { ServiceCard } from "@/components/service-card";
 import { Button, Card, Container, Section, SectionHeading } from "@/components/ui";
+import { products } from "@/content/products";
 import { services } from "@/content/services";
 import { coreValues, site } from "@/content/site";
 
@@ -128,6 +130,25 @@ export default function HomePage() {
         <div className="mt-8">
           <Button href="/dich-vu" variant="secondary">
             Xem tất cả dịch vụ
+          </Button>
+        </div>
+      </Section>
+
+      {/* 5 · Bộ sản phẩm nổi bật */}
+      <Section>
+        <SectionHeading
+          eyebrow="Sản phẩm"
+          title="Bộ sản phẩm K-SON"
+          lead="Nhập khẩu nguyên kiện từ Hàn Quốc, sản xuất bởi Saturn Bio Tech — Gangwon."
+        />
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {products.slice(0, 4).map((product) => (
+            <ProductCard key={product.slug} product={product} />
+          ))}
+        </div>
+        <div className="mt-8 text-center">
+          <Button href="/san-pham" variant="secondary">
+            Xem toàn bộ catalog
           </Button>
         </div>
       </Section>

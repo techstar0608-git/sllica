@@ -169,7 +169,7 @@ export default function ServicesOverviewPage() {
               key={faq.q}
               className="group rounded-2xl border border-line bg-white p-5"
             >
-              <summary className="cursor-pointer list-none text-lg font-semibold text-brand-900">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center text-lg font-semibold text-brand-900">
                 {faq.q}
               </summary>
               <p className="mt-3 text-muted">{faq.a}</p>

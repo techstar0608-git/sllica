@@ -42,7 +42,7 @@ export default function SurveyPage() {
                 Ngại điền form? Gọi thẳng{" "}
                 <a
                   href={site.hotlineHref}
-                  className="font-bold text-white underline"
+                  className="inline-flex min-h-11 items-center font-bold text-white underline"
                 >
                   {site.hotline}
                 </a>
@@ -131,7 +131,7 @@ export default function SurveyPage() {
               key={faq.q}
               className="rounded-2xl border border-line bg-white p-5"
             >
-              <summary className="cursor-pointer list-none text-lg font-semibold text-brand-900">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center text-lg font-semibold text-brand-900">
                 {faq.q}
               </summary>
               <p className="mt-3 text-muted">{faq.a}</p>

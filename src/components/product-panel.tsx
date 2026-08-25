@@ -49,7 +49,7 @@ export function ProductPanel({ slugs }: { slugs: string[] }) {
               {product.composition.map((spec) => (
                 <li
                   key={spec.label}
-                  className="rounded-full bg-brand-50 px-3 py-1.5 text-sm"
+                  className="rounded-full bg-brand-50 px-3 py-1.5"
                 >
                   <span className="text-muted">{spec.label}: </span>
                   <span className="font-semibold text-brand-900">{spec.value}</span>
@@ -59,7 +59,7 @@ export function ProductPanel({ slugs }: { slugs: string[] }) {
           </div>
 
           <details className="group mt-5 rounded-xl border border-line p-4">
-            <summary className="cursor-pointer list-none font-semibold text-brand-700">
+            <summary className="flex min-h-11 cursor-pointer list-none items-center font-semibold text-brand-700">
               Công dụng & hướng dẫn sử dụng
             </summary>
 
@@ -79,7 +79,7 @@ export function ProductPanel({ slugs }: { slugs: string[] }) {
             </p>
 
             <div className="mt-3 overflow-x-auto rounded-xl border border-line">
-              <table className="w-full min-w-[32rem] border-collapse text-left text-sm">
+              <table className="w-full min-w-[32rem] border-collapse text-left">
                 <thead>
                   <tr className="bg-brand-50">
                     <th scope="col" className="px-3 py-2 font-semibold">
@@ -106,12 +106,12 @@ export function ProductPanel({ slugs }: { slugs: string[] }) {
             </div>
 
             {product.dosageNote ? (
-              <p className="mt-3 rounded-xl border-l-4 border-amber-400 bg-amber-50 p-3 text-sm text-amber-900">
+              <p className="mt-3 rounded-xl border-l-4 border-amber-400 bg-amber-50 p-4 text-amber-900">
                 <strong>Lưu ý:</strong> {product.dosageNote}
               </p>
             ) : null}
 
-            <ul className="mt-4 space-y-2 text-sm text-muted">
+            <ul className="mt-4 space-y-2 text-muted">
               {product.usageNotes.map((note) => (
                 <li key={note} className="flex gap-2">
                   <span aria-hidden="true">•</span>

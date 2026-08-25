@@ -658,34 +658,19 @@
         font-size: 12px;
         margin-top: 18px;
       }
-      @media (max-width: 900px) {
-        .hero-grid,
-        .specs-grid,
-        .science-grid,
-        .form-grid,
-        .footer-grid {
+      @media (max-width: 900px) {.legacy-landing .hero-grid, .legacy-landing .specs-grid, .legacy-landing .science-grid, .legacy-landing .form-grid, .legacy-landing .footer-grid {
           grid-template-columns: 1fr;
-        }
-        .legacy-landing .cards-3, .legacy-landing .cards-2, .legacy-landing .steps, .legacy-landing .trust {
+        }.legacy-landing .cards-3, .legacy-landing .cards-2, .legacy-landing .steps, .legacy-landing .trust {
           grid-template-columns: 1fr 1fr;
-        }
-        .legacy-landing .hero h1 {
+        }.legacy-landing .hero h1 {
           font-size: 32px;
-        }
-        .legacy-landing .trust {
+        }.legacy-landing .trust {
           margin-top: 20px;
         }
       }
-      @media (max-width: 560px) {
-        .cards-3,
-        .cards-2,
-        .steps,
-        .trust,
-        .row,
-        .stats {
+      @media (max-width: 560px) {.legacy-landing .cards-3, .legacy-landing .cards-2, .legacy-landing .steps, .legacy-landing .trust, .legacy-landing .row, .legacy-landing .stats {
           grid-template-columns: 1fr;
-        }
-        .legacy-landing .hero {
+        }.legacy-landing .hero {
           padding: 40px 0;
         }
       }

@@ -45,3 +45,9 @@ next-env.d.ts
 
 # bản zip landing cũ (bản cũ hơn docs/legacy-index.html, ảnh đã có ở public/img)
 docs/silica-landing.zip
+
+# zip logo gốc (ảnh đã giải nén vào public/img)
+docs/drive-download-*.zip
+
+# zip ảnh sản phẩm gốc (đã giải nén vào public/img)
+docs/zips/
