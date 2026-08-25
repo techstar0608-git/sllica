@@ -51,3 +51,6 @@ docs/drive-download-*.zip
 
 # zip ảnh sản phẩm gốc (đã giải nén vào public/img)
 docs/zips/
+
+# thư mục tạm của wrangler
+.wrangler/

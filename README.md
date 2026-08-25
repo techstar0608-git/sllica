@@ -35,6 +35,19 @@ Sửa nội dung thì sửa ở đây, không sửa trong `src/app/`.
 | `/dich-vu/[slug]` | 4 trang dịch vụ, chung khung 9 khối |
 | `/dang-ky-khao-sat` → `/cam-on` | Form chuyển đổi |
 | `/landing/kson-sulfur-silicate` | Landing page cũ, chuyển từ WordPress |
+| `/[batch]` | Trang truy xuất lô hàng (QR trên bao bì) |
+
+### Trang truy xuất lô hàng
+
+`/2026-nk-im01-sc02-th01-001/` và các lô sau này. **Không đổi slug** — mã QR đã
+in trên bao bì đang trỏ về đúng URL này.
+
+Thêm lô mới: chép một khối trong `src/content/batches.ts`, sửa `slug`,
+`batchCode`, `producedAt`, `expiresAt`. Phần mô tả sản phẩm dùng chung
+`SOIL_CONDITIONER` nên không phải chép lại.
+
+Trang này cố ý không có header/footer chung (người quét QR chỉ xem thông tin
+lô). Các trang còn lại nằm trong route group `(chrome)`.
 
 ## Form
 

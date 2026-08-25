@@ -39,9 +39,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Chừa chỗ cho thanh liên hệ nổi (G-02) trên mobile. */
+/* Chừa chỗ cho thanh liên hệ nổi (G-02) trên mobile.
+   Chỉ áp cho trang có header/footer chung, không áp cho /[batch]. */
 @media (max-width: 767px) {
-  body {
+  .has-contact-bar {
     padding-bottom: 68px;
   }
 }
