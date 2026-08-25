@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+/*
+ * Ràng buộc từ docs/SITEMAP_LAYOUT.md mục 0:
+ * mobile first · chữ tối thiểu 16px · nút bấm to · tránh chữ trắng trên nền ảnh.
+ */
+@theme {
+  --color-brand-50: #f3f9f4;
+  --color-brand-100: #e8f3eb;
+  --color-brand-200: #d6ecda;
+  --color-brand-300: #a8d4b2;
+  --color-brand-500: #1f7a3a;
+  --color-brand-600: #1a6832;
+  --color-brand-700: #155a2a;
+  --color-brand-900: #1f3a28;
+
+  --color-ink: #1f2a24;
+  --color-muted: #5b6b62;
+  --color-line: #e3ebe5;
+
+  --color-accent: #f5b400;
+  --color-blue: #3a8dde;
+  --color-warn: #e07a3a;
+
+  --font-sans:
+    "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #fff;
+  color: var(--color-ink);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Chừa chỗ cho thanh liên hệ nổi (G-02) trên mobile. */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 68px;
+  }
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-brand-500);
+  outline-offset: 2px;
+}
+
+/*
+ * Style kế thừa từ landing page K-SON đang chạy tại silica.vn
+ * (xem /landing/kson-sulfur-silicate) để cả site đồng bộ một ngôn ngữ thiết kế:
+ * nền sáng, tiêu đề xanh đậm căn giữa, thẻ trắng bo tròn, pill badge có chấm màu.
+ */
+
+/* Pill badge — như khối "Lưu huỳnh S > 23%" trên landing. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid var(--color-line);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.pill-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* Ô icon bo tròn nền nhạt — như các card "Thuốc hóa học mất dần hiệu quả". */
+.icon-tile {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: var(--color-brand-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.icon-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

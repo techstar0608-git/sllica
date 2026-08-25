@@ -1,0 +1,1146 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>K-SON Sulfur Silicate Liquid — Cây ăn trái khỏe</title>
+    <style>
+      :root {
+        --green: #1f7a3a;
+        --green-dark: #155a2a;
+        --green-light: #e8f3eb;
+        --green-soft: #f3f9f4;
+        --text: #1f2a24;
+        --muted: #5b6b62;
+        --line: #e3ebe5;
+        --yellow: #f5b400;
+        --blue: #3a8dde;
+        --orange: #e07a3a;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+          Arial, sans-serif;
+        color: var(--text);
+        background: #fff;
+        line-height: 1.5;
+        font-size: 15px;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--green);
+        color: #fff;
+        padding: 14px 28px;
+        border-radius: 999px;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        font-size: 15px;
+      }
+      .btn:hover {
+        background: var(--green-dark);
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #fff;
+        border: 1px solid var(--line);
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .badge .dot {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: 700;
+        font-size: 12px;
+      }
+      .pill {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid var(--line);
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        color: var(--green-dark);
+        font-weight: 500;
+      }
+
+      /* HERO */
+      .hero {
+        position: relative;
+        background: linear-gradient(
+          120deg,
+          #eaf6ec 0%,
+          #f5fbe8 60%,
+          #fff7d6 100%
+        );
+        overflow: hidden;
+        padding: 60px 0 50px;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("hero-bg.png") center/cover;
+        opacity: 0.35;
+      }
+      .hero-grid {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+      .hero h1 {
+        font-size: 44px;
+        line-height: 1.15;
+        font-weight: 800;
+        margin: 16px 0 18px;
+        color: #173a22;
+      }
+      .hero p.lead {
+        color: #36493d;
+        font-size: 16px;
+        margin-bottom: 22px;
+        max-width: 520px;
+      }
+      .hero-badges {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 22px;
+      }
+      .badge.s .dot {
+        background: var(--yellow);
+      }
+      .badge.si .dot {
+        background: var(--blue);
+      }
+      .badge.org .dot {
+        background: var(--green);
+      }
+      .hero-check {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        margin-top: 22px;
+        color: #2d4a36;
+        font-size: 14px;
+      }
+      .hero-check span::before {
+        content: "✓";
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        text-align: center;
+        background: #d6ecda;
+        color: var(--green);
+        border-radius: 50%;
+        margin-right: 8px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .hero-bottle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .hero-bottle img {
+        max-height: 520px;
+        max-width: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.15));
+      }
+      .bottle-mini img {
+        max-height: 240px;
+        width: auto;
+        filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.1));
+      }
+
+      /* TRUST BAR */
+      .trust {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        margin: -30px auto 0;
+        position: relative;
+        max-width: 1050px;
+        padding: 22px 28px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+      }
+      .trust .item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 14px;
+        color: #2c3a31;
+      }
+      .trust .ico {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--green-soft);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--green);
+        overflow: hidden;
+      }
+      .trust .ico img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .trust .item b {
+        display: block;
+        font-weight: 700;
+        font-size: 14px;
+      }
+      .trust .item small {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      /* SECTIONS */
+      section {
+        padding: 70px 0;
+      }
+      h2.section-title {
+        text-align: center;
+        font-size: 30px;
+        font-weight: 800;
+        color: #173a22;
+        margin-bottom: 14px;
+        line-height: 1.25;
+      }
+      .section-sub {
+        text-align: center;
+        color: var(--muted);
+        max-width: 680px;
+        margin: 0 auto 40px;
+        font-size: 15px;
+      }
+
+      /* PROBLEM CARDS */
+      .cards-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+      .pcard {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 24px;
+      }
+      .pcard .picon {
+        width: 64px;
+        height: 64px;
+        border-radius: 12px;
+        background: #fff3eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        margin-bottom: 14px;
+        overflow: hidden;
+      }
+      .pcard .picon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .pcard h3 {
+        font-size: 17px;
+        margin-bottom: 8px;
+        color: #1f3a28;
+      }
+      .pcard p {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      /* SOLUTION (2x2) */
+      .solution {
+        background: var(--green-soft);
+      }
+      .cards-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+      .scard {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 24px;
+        display: flex;
+        gap: 18px;
+      }
+      .scard .sicon {
+        flex: 0 0 64px;
+        width: 64px;
+        height: 64px;
+        border-radius: 12px;
+        background: var(--green-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--green);
+        font-size: 26px;
+        overflow: hidden;
+      }
+      .scard .sicon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .scard .tag {
+        font-size: 12px;
+        color: var(--green);
+        font-weight: 600;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+      .scard h3 {
+        font-size: 17px;
+        margin-bottom: 6px;
+        color: #1f3a28;
+      }
+      .scard p {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      /* SPECS */
+      .specs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.6fr;
+        gap: 24px;
+        align-items: start;
+      }
+      .specs-card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 22px;
+      }
+      .specs-card h4 {
+        font-size: 15px;
+        margin-bottom: 14px;
+        color: #1f3a28;
+        text-align: center;
+        font-weight: 700;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      th,
+      td {
+        padding: 10px 8px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: var(--green-soft);
+        color: #1f3a28;
+        font-weight: 600;
+        font-size: 12px;
+      }
+      .bottle-mini {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+      }
+      .bottle-mini img {
+        max-height: 240px;
+        width: auto;
+      }
+      .specs-meta {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 12px;
+        text-align: center;
+      }
+
+      /* USAGE STEPS */
+      .usage {
+        background: var(--green-soft);
+      }
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        position: relative;
+      }
+      .step {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 22px;
+        text-align: center;
+        position: relative;
+      }
+      .step .num {
+        position: absolute;
+        top: -16px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--green);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 14px;
+      }
+      .step .sicon2 {
+        font-size: 34px;
+        color: var(--green);
+        margin: 6px 0 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 60px;
+      }
+      .step .sicon2 img {
+        height: 60px;
+        width: auto;
+        object-fit: contain;
+      }
+      .step h4 {
+        font-size: 15px;
+        margin-bottom: 6px;
+        color: #1f3a28;
+      }
+      .step p {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .note {
+        margin-top: 20px;
+        background: #fff7e0;
+        border: 1px solid #f0e1a8;
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-size: 13px;
+        color: #6b5a0e;
+        text-align: center;
+      }
+
+      /* SCIENCE */
+      .science-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 30px;
+        align-items: center;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+      .stat {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 22px;
+        text-align: center;
+      }
+      .stat .num {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--green);
+        line-height: 1;
+      }
+      .stat .lbl {
+        margin-top: 6px;
+        font-weight: 700;
+        font-size: 14px;
+        color: #1f3a28;
+      }
+      .stat .sub {
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 4px;
+      }
+      .science-img {
+        border-radius: 18px;
+        overflow: hidden;
+        position: relative;
+      }
+      .science-img img {
+        width: 100%;
+        height: 340px;
+        object-fit: cover;
+      }
+      .science-cap {
+        margin-top: 10px;
+        font-size: 13px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      /* FORM */
+      .form-wrap {
+        background: linear-gradient(180deg, #f4faf5, #ecf6ee);
+        padding: 60px 0;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: 30px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        overflow: hidden;
+      }
+      .form-left {
+        padding: 32px;
+        background: #f7fbf7;
+      }
+      .form-left h3 {
+        font-size: 22px;
+        margin-bottom: 10px;
+        color: #173a22;
+      }
+      .form-left p {
+        color: var(--muted);
+        font-size: 14px;
+        margin-bottom: 18px;
+      }
+      .form-left ul {
+        list-style: none;
+      }
+      .form-left li {
+        padding: 6px 0;
+        color: #2d4a36;
+        font-size: 14px;
+      }
+      .form-left li::before {
+        content: "✓";
+        color: var(--green);
+        margin-right: 8px;
+        font-weight: 700;
+      }
+      .form-right {
+        padding: 32px;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+      label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: #2d4a36;
+        margin-bottom: 6px;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 11px 14px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        font-size: 14px;
+        background: #fff;
+        font-family: inherit;
+      }
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--green);
+      }
+      .form-right .btn {
+        width: 100%;
+        justify-content: center;
+        margin-top: 6px;
+      }
+      .form-foot {
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      /* FOOTER */
+      footer {
+        background: #fff;
+        border-top: 1px solid var(--line);
+        padding: 26px 0;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr;
+        gap: 24px;
+        align-items: center;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .brand .logo {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: var(--green-light);
+        color: var(--green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+      }
+      .brand b {
+        display: block;
+        color: #1f3a28;
+      }
+      .brand small {
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .call {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #1f3a28;
+        font-weight: 700;
+      }
+      .call .ph {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--green);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .call small {
+        display: block;
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 12px;
+      }
+      .foot-icons {
+        display: flex;
+        gap: 14px;
+        justify-content: flex-end;
+        color: var(--green);
+        font-size: 18px;
+      }
+      .copyright {
+        text-align: center;
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 18px;
+      }
+
+      @media (max-width: 900px) {
+        .hero-grid,
+        .specs-grid,
+        .science-grid,
+        .form-grid,
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+        .cards-3,
+        .cards-2,
+        .steps,
+        .trust {
+          grid-template-columns: 1fr 1fr;
+        }
+        .hero h1 {
+          font-size: 32px;
+        }
+        .trust {
+          margin-top: 20px;
+        }
+      }
+      @media (max-width: 560px) {
+        .cards-3,
+        .cards-2,
+        .steps,
+        .trust,
+        .row,
+        .stats {
+          grid-template-columns: 1fr;
+        }
+        .hero {
+          padding: 40px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="pill">🌿 Phòng trừ sâu bệnh sinh học • Dạng lỏng</span>
+          <h1>Cây ăn trái khỏe —<br />Không thuốc hóa học</h1>
+          <p class="lead">
+            Kết hợp Nano Silicate ion hóa + Lưu huỳnh sinh học. Phòng ngừa 8+
+            loại sâu bệnh — hữu cơ, an toàn, không dư lượng PLS.
+          </p>
+          <div class="hero-badges">
+            <span class="badge s"
+              ><span class="dot">S</span> Lưu huỳnh S &gt; 23%</span
+            >
+            <span class="badge si"
+              ><span class="dot">Si</span> Silic Si 14%</span
+            >
+            <span class="badge org"
+              ><span class="dot">🌱</span> Hữu cơ sinh học</span
+            >
+          </div>
+          <a href="#dangky" class="btn">Đăng ký nhận sản phẩm mẫu →</a>
+          <div class="hero-check">
+            <span>Hiệu quả cao</span>
+            <span>An toàn sinh học</span>
+            <span>Bảo vệ môi trường</span>
+          </div>
+        </div>
+        <div class="hero-bottle">
+          <img src="bottle.png" alt="K-SON Sulfur Silicate Liquid 500ml" />
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST BAR -->
+    <div class="container">
+      <div class="trust">
+        <div class="item">
+          <div class="ico"><img src="ic-korea.png" alt="" /></div>
+          <div><b>Nhập khẩu</b><small>Hàn Quốc</small></div>
+        </div>
+        <div class="item">
+          <div class="ico"><img src="ic-bio.png" alt="" /></div>
+          <div><b>Lưu huỳnh</b><small>sinh học</small></div>
+        </div>
+        <div class="item">
+          <div class="ico"><img src="ic-shield.png" alt="" /></div>
+          <div><b>Không dư lượng</b><small>PLS</small></div>
+        </div>
+        <div class="item">
+          <div class="ico"><img src="ic-flask.png" alt="" /></div>
+          <div><b>Saturn Bio Tech</b><small>20 năm R&D</small></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROBLEM -->
+    <section>
+      <div class="container">
+        <h2 class="section-title">
+          Sâu bệnh ngày càng kháng thuốc —<br />chi phí ngày càng tăng?
+        </h2>
+        <p class="section-sub">
+          Hiệu lực thuốc hóa học giảm dần, chi phí tăng cao, dư lượng thuốc BVTV
+          ngày càng là rào cản lớn cho nông sản xuất khẩu.
+        </p>
+        <div class="cards-3">
+          <div class="pcard">
+            <div class="picon"><img src="ic-spray.png" alt="" /></div>
+            <h3>Thuốc hóa học mất dần hiệu quả</h3>
+            <p>
+              Sâu bệnh kháng thuốc sau nhiều vụ. Tăng liều, tăng chi phí, hiệu
+              quả giảm.
+            </p>
+          </div>
+          <div class="pcard">
+            <div class="picon"><img src="ic-apple.png" alt="" /></div>
+            <h3>Dư lượng thuốc BVTV trên trái</h3>
+            <p>Rào cản xuất khẩu và tiêu thụ thị trường cao cấp.</p>
+          </div>
+          <div class="pcard">
+            <div class="picon"><img src="ic-soil.png" alt="" /></div>
+            <h3>Phun nhiều — đất và cây yếu dần</h3>
+            <p>Phá vỡ hệ vi sinh đất, sức đề kháng tự nhiên của cây suy yếu.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section class="solution">
+      <div class="container">
+        <h2 class="section-title">Giải pháp sinh học — Hiệu quả kép</h2>
+        <p class="section-sub">
+          Lưu huỳnh diệt sâu bệnh. Silicate tạo tường rào bảo vệ. Hai cơ chế —
+          một sản phẩm.
+        </p>
+        <div class="cards-2">
+          <div class="scard">
+            <div class="sicon"><img src="ic-shield-plant.png" alt="" /></div>
+            <div>
+              <div class="tag">Phòng + Trị</div>
+              <h3>Phòng ngừa 8+ loại sâu bệnh</h3>
+              <p>
+                Thán thư, Sương mai, Phấn trắng, Đạo ôn, Rệp, Bọ trĩ, Nhện đỏ,
+                Ruồi trắng.
+              </p>
+            </div>
+          </div>
+          <div class="scard">
+            <div class="sicon"><img src="ic-bio.png" alt="" /></div>
+            <div>
+              <div class="tag">Vật lý • Sinh học • Phân tử</div>
+              <h3>Cơ chế tác động 3 lớp</h3>
+              <p>
+                Silicon vật lý ngăn nấm. Lưu huỳnh diệt nấm/côn trùng. Enzyme
+                kháng khuẩn kích hoạt từ bên trong.
+              </p>
+            </div>
+          </div>
+          <div class="scard">
+            <div class="sicon"><img src="ic-safety.png" alt="" /></div>
+            <div>
+              <div class="tag">An toàn • Hữu cơ</div>
+              <h3>Hữu cơ — Không dư lượng PLS</h3>
+              <p>
+                Không liên quan PLS. An toàn người dùng, không hại đến thiên
+                địch có lợi.
+              </p>
+            </div>
+          </div>
+          <div class="scard">
+            <div class="sicon"><img src="veggies.png" alt="" /></div>
+            <div>
+              <div class="tag">Đa cây trồng</div>
+              <h3>Dùng được mọi loại cây trồng</h3>
+              <p>Lúa, ớt, dưa, dâu tây, cà chua, xoài, nhãn, sầu riêng…</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPECS -->
+    <section>
+      <div class="container">
+        <h2 class="section-title">Thông số kỹ thuật</h2>
+        <div class="specs-grid">
+          <div class="specs-card">
+            <h4>Thành phần</h4>
+            <div class="bottle-mini">
+              <img src="bottle.png" alt="K-SON bottle" />
+            </div>
+            <table>
+              <tr>
+                <th>Chỉ tiêu</th>
+                <th>Hàm lượng</th>
+                <th>Ghi chú</th>
+              </tr>
+              <tr>
+                <td>Lưu huỳnh (S)</td>
+                <td>&gt; 23%</td>
+                <td>Lưu huỳnh sinh học</td>
+              </tr>
+              <tr>
+                <td>Silic (Si)</td>
+                <td>14%</td>
+                <td>Nano Silicate ion hóa</td>
+              </tr>
+              <tr>
+                <td>Dạng lưu huỳnh</td>
+                <td>Hạt 1–4 micron</td>
+                <td>Tác dụng nhanh</td>
+              </tr>
+            </table>
+          </div>
+          <div class="specs-card">
+            <h4>Cây trồng / Sâu bệnh / Liều dùng</h4>
+            <table>
+              <tr>
+                <th>Cây trồng</th>
+                <th>Sâu bệnh</th>
+                <th>Liều dùng</th>
+                <th>Tần suất</th>
+              </tr>
+              <tr>
+                <td>Lúa</td>
+                <td>Đạo ôn</td>
+                <td>20ml/20L (1.000 lần)</td>
+                <td>2–3 lần, cách 5–7 ngày</td>
+              </tr>
+              <tr>
+                <td>Ớt</td>
+                <td>Thán thư, Bọ trĩ</td>
+                <td>20ml/20L (1.000 lần)</td>
+                <td>2–3 lần, cách 5–7 ngày</td>
+              </tr>
+              <tr>
+                <td>Dưa chuột</td>
+                <td>Phấn trắng</td>
+                <td>20ml/20L (1.000 lần)</td>
+                <td>2–3 lần, cách 5–7 ngày</td>
+              </tr>
+              <tr>
+                <td>Dưa lê</td>
+                <td>Sương mai</td>
+                <td>20ml/20L (1.000 lần)</td>
+                <td>2–3 lần, cách 5–7 ngày</td>
+              </tr>
+              <tr>
+                <td>Cải thảo</td>
+                <td>Rệp</td>
+                <td>20ml/20L (1.000 lần)</td>
+                <td>2–3 lần, cách 5–7 ngày</td>
+              </tr>
+              <tr>
+                <td>Dâu tây</td>
+                <td>Bọ ve</td>
+                <td>20ml/20L (1.000 lần)</td>
+                <td>2–3 lần, cách 5–7 ngày</td>
+              </tr>
+              <tr>
+                <td>Cà chua</td>
+                <td>Ruồi trắng</td>
+                <td>20ml/20L (1.000 lần)</td>
+                <td>2–3 lần, cách 5–7 ngày</td>
+              </tr>
+            </table>
+            <div class="specs-meta">
+              Quy cách: Dạng lỏng • Xuất xứ: Saturn Bio Tech, Korea • Đóng gói:
+              cập nhật sau
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- USAGE -->
+    <section class="usage">
+      <div class="container">
+        <h2 class="section-title">Cách dùng đúng — Hiệu quả tối ưu</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="num">1</div>
+            <div class="sicon2"><img src="ic-magleaf.png" alt="" /></div>
+            <h4>Xác định tình trạng</h4>
+            <p>
+              Phòng ngừa: phun định kỳ. Đang có bệnh: phun 2–3 lần liên tiếp.
+            </p>
+          </div>
+          <div class="step">
+            <div class="num">2</div>
+            <div class="sicon2"><img src="ic-flask.png" alt="" /></div>
+            <h4>Pha dung dịch</h4>
+            <p>Bón lá: pha 1.000 lần (20ml/20L). Phun thuốc: pha 2.000 lần.</p>
+          </div>
+          <div class="step">
+            <div class="num">3</div>
+            <div class="sicon2"><img src="ic-spray.png" alt="" /></div>
+            <h4>Phun đều hai mặt lá</h4>
+            <p>Tránh phun khi nhiệt độ &gt; 30°C hoặc nắng gắt.</p>
+          </div>
+          <div class="step">
+            <div class="num">4</div>
+            <div class="sicon2">📅</div>
+            <h4>Lặp lại định kỳ</h4>
+            <p>
+              Cách 5–7 ngày/lần, 2 lần nồng độ thấp hiệu quả hơn 1 lần nồng độ
+              cao.
+            </p>
+          </div>
+        </div>
+        <div class="note">
+          ⚠️ Lưu ý: Lắc kỹ trước khi dùng. Bảo quản 5–30°C sau khi mở. Thử
+          nghiệm trước kỳ thu hoạch.
+        </div>
+      </div>
+    </section>
+
+    <!-- SCIENCE -->
+    <section>
+      <div class="container">
+        <h2 class="section-title">Được kiểm chứng bởi khoa học</h2>
+        <div class="science-grid">
+          <div class="stats">
+            <div class="stat">
+              <div class="num">&gt;23%</div>
+              <div class="lbl">S</div>
+              <div class="sub">Lưu huỳnh sinh học</div>
+            </div>
+            <div class="stat">
+              <div class="num">14%</div>
+              <div class="lbl">Si</div>
+              <div class="sub">Silic Nano ion hóa</div>
+            </div>
+            <div class="stat">
+              <div class="num">8+</div>
+              <div class="lbl">loại</div>
+              <div class="sub">Sâu bệnh phòng trị hiệu quả</div>
+            </div>
+            <div class="stat">
+              <div class="num">2 lần</div>
+              <div class="lbl"></div>
+              <div class="sub">Phun nồng độ thấp hiệu quả hơn 1 lần cao</div>
+            </div>
+          </div>
+          <div>
+            <div class="science-img">
+              <img src="science.png" alt="Saturn Bio Tech research lab" />
+            </div>
+            <div class="science-cap">
+              Nghiên cứu Saturn Bio Tech / Silicate Crop Research Institute,
+              Korea
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORM -->
+    <div class="form-wrap" id="dangky">
+      <div class="container">
+        <div class="form-grid">
+          <div class="form-left">
+            <h3>Nhận sản phẩm mẫu miễn phí</h3>
+            <p>
+              Điền thông tin — chúng tôi sẽ liên hệ sắp xếp gửi mẫu khi sản phẩm
+              có quyết định lưu hành chính thức.
+            </p>
+            <ul>
+              <li>Hoàn toàn miễn phí</li>
+              <li>Kỹ thuật viên hỗ trợ</li>
+              <li>Không ràng buộc mua hàng</li>
+            </ul>
+          </div>
+          <form class="form-right" id="dkForm">
+            <div class="row">
+              <div>
+                <label>Họ và tên</label
+                ><input name="hoten" placeholder="Nhập họ và tên" required />
+              </div>
+              <div>
+                <label>Số điện thoại</label
+                ><input name="sdt" placeholder="Nhập số điện thoại" required />
+              </div>
+            </div>
+            <div style="margin-bottom: 14px">
+              <label>Email</label
+              ><input name="email" type="email" placeholder="Nhập email" />
+            </div>
+            <div style="margin-bottom: 14px">
+              <label>Tên công ty / Trang trại</label
+              ><input name="cty" placeholder="VD: Trang trại Hữu Phát" />
+            </div>
+            <div style="margin-bottom: 14px">
+              <label>Mục đích sử dụng</label
+              ><input
+                name="mucdich"
+                placeholder="VD: Vườn xoài 3ha tại Đồng Tháp..."
+              />
+            </div>
+            <input
+              type="hidden"
+              name="san_pham"
+              value="K-SON Sulfur Silicate Liquid"
+            />
+            <button class="btn" type="submit">Đăng ký nhận mẫu</button>
+            <div class="form-foot">san_pham = K-SON Sulfur Silicate Liquid</div>
+          </form>
+          <script>
+            // TODO: Thay PASTE_WEB_APP_URL_HERE bằng URL Web App của Google Apps Script
+            const GAS_URL = "https://script.google.com/macros/s/AKfycbzxRoeUSSEeJoPT2Dl3IiJjKEtUJ_0kMyee7k9-pMbuzYAyX09YOB86JGx3zWICcYxnjw/exec";
+            document
+              .getElementById("dkForm")
+              .addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const btn = e.target.querySelector('button[type="submit"]');
+                const original = btn.textContent;
+                btn.disabled = true;
+                btn.textContent = "Đang gửi...";
+                try {
+                  await fetch(GAS_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    body: new FormData(e.target),
+                  });
+                  alert("Cảm ơn bạn đã đăng ký! Chúng tôi sẽ liên hệ sớm.");
+                  e.target.reset();
+                } catch (err) {
+                  alert("Có lỗi xảy ra, vui lòng thử lại.");
+                } finally {
+                  btn.disabled = false;
+                  btn.textContent = original;
+                }
+              });
+          </script>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="brand">
+            <div class="logo">Si</div>
+            <div>
+              <b>CÔNG TY TNHH SILICA</b>
+              <small
+                >3F2 Đường 22, Khu phố 2, P. An Khánh, TP. Thủ Đức, TP.
+                HCM</small
+              ><br />
+              <small>huunx@silica.vn</small>
+            </div>
+          </div>
+          <div class="call">
+            <div class="ph">📞</div>
+            <div><small>Gọi ngay</small>0932 047 055</div>
+          </div>
+          <div class="foot-icons">
+            <span>💧</span><span>🛡️</span><span>⚗️</span><span>🌿</span>
+          </div>
+        </div>
+        <div class="copyright">© 2026 Silica. All rights reserved.</div>
+      </div>
+    </footer>
+  </body>
+</html>
