@@ -1,15 +1,19 @@
 "use client";
 
-import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
-import { submitSurvey, type SurveyFormState } from "@/app/actions";
+import { useRouter } from "next/navigation";
+import { useState, type FormEvent } from "react";
+import { sendLead } from "@/lib/lead";
 import { surveyIssues } from "@/content/site";
 
-const initialState: SurveyFormState = { errors: {} };
+type Errors = Partial<Record<"fullName" | "phone" | "location", string>>;
+
+const PHONE_PATTERN = /^0\d{9}$/;
 
 /**
  * variant "compact" — form rút gọn trong khối CTA cuối trang (G-05).
  * variant "full"    — form đầy đủ trên /dang-ky-khao-sat.
+ *
+ * Site chạy static export nên form gửi thẳng lên Apps Script từ trình duyệt.
  */
 export function SurveyForm({
   variant = "full",
@@ -18,19 +22,69 @@ export function SurveyForm({
   variant?: "compact" | "full";
   source?: string;
 }) {
-  const [state, formAction] = useActionState(submitSurvey, initialState);
+  const router = useRouter();
+  const [errors, setErrors] = useState<Errors>({});
+  const [pending, setPending] = useState(false);
   const isFull = variant === "full";
 
-  return (
-    <form action={formAction} className="space-y-4" noValidate>
-      <input type="hidden" name="source" value={source || variant} />
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
 
+    const read = (key: string) => String(data.get(key) ?? "").trim();
+    const fullName = read("fullName");
+    const phone = read("phone").replace(/[\s.]/g, "");
+    const location = read("location");
+
+    const next: Errors = {};
+    if (!fullName) next.fullName = "Vui lòng nhập họ tên.";
+    if (!phone) {
+      next.phone = "Vui lòng nhập số điện thoại hoặc Zalo.";
+    } else if (!PHONE_PATTERN.test(phone)) {
+      next.phone = "Số điện thoại cần có 10 chữ số, bắt đầu bằng 0.";
+    }
+    if (!location) next.location = "Vui lòng cho biết xã và tỉnh của vườn.";
+
+    setErrors(next);
+    if (Object.keys(next).length > 0) return;
+
+    setPending(true);
+
+    const issues = data
+      .getAll("issues")
+      .filter((v): v is string => typeof v === "string");
+
+    // Gộp phần thông tin riêng của khảo sát vườn vào "mucdich" để dùng chung
+    // sheet với form của landing page cũ.
+    const details = [
+      `Xã/Tỉnh: ${location}`,
+      read("area") ? `Diện tích: ${read("area")} ha` : "",
+      read("treeCount") ? `Số cây: ${read("treeCount")}` : "",
+      issues.length ? `Vấn đề: ${issues.join("; ")}` : "",
+      read("note") ? `Ghi chú: ${read("note")}` : "",
+      `Nguồn: ${source || variant}`,
+    ]
+      .filter(Boolean)
+      .join(" | ");
+
+    try {
+      await sendLead({ hoten: fullName, sdt: phone, mucdich: details });
+    } catch {
+      // no-cors nên không đọc được response; lỗi mạng cũng không chặn chủ vườn.
+    }
+
+    router.push("/cam-on");
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4" noValidate>
       <Field
         label="Họ tên"
         name="fullName"
         required
         autoComplete="name"
-        error={state.errors.fullName}
+        error={errors.fullName}
       />
       <Field
         label="Số điện thoại / Zalo"
@@ -40,14 +94,14 @@ export function SurveyForm({
         required
         autoComplete="tel"
         placeholder="0912345678"
-        error={state.errors.phone}
+        error={errors.phone}
       />
       <Field
         label="Xã / Tỉnh"
         name="location"
         required
         placeholder="Ví dụ: xã Krông Năng, Đắk Lắk"
-        error={state.errors.location}
+        error={errors.location}
       />
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -68,7 +122,7 @@ export function SurveyForm({
               {surveyIssues.map((issue) => (
                 <label
                   key={issue}
-                  className="flex cursor-pointer items-start gap-3 rounded-xl border border-line p-3 hover:bg-brand-50"
+                  className="flex min-h-11 cursor-pointer items-start gap-3 rounded-xl border border-line p-3 hover:bg-brand-50"
                 >
                   <input
                     type="checkbox"
@@ -93,25 +147,18 @@ export function SurveyForm({
         </>
       ) : null}
 
-      <SubmitButton />
+      <button
+        type="submit"
+        disabled={pending}
+        className="w-full rounded-full bg-brand-500 px-7 py-4 text-base font-semibold text-white hover:bg-brand-700 disabled:opacity-70"
+      >
+        {pending ? "Đang gửi…" : "Đăng ký khảo sát miễn phí"}
+      </button>
 
       <p className="text-muted">
         Khảo sát miễn phí, không ép mua. Thông tin vườn của bạn được bảo mật.
       </p>
     </form>
-  );
-}
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className="w-full rounded-full bg-brand-500 px-7 py-4 text-base font-semibold text-white hover:bg-brand-700 disabled:opacity-70"
-    >
-      {pending ? "Đang gửi…" : "Đăng ký khảo sát miễn phí"}
-    </button>
   );
 }
 

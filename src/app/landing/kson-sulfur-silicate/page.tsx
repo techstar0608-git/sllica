@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { submitLegacyLead } from "./actions";
+import { LegacyForm } from "./legacy-form";
 import "./legacy.css";
 
 export const metadata: Metadata = {
@@ -352,7 +352,7 @@ export default function KsonSulfurSilicateLanding() {
                     <li>Không ràng buộc mua hàng</li>
                   </ul>
                 </div>
-                <form className="form-right" action={submitLegacyLead}>
+                <LegacyForm>
                   <div className="row">
                     <div>
                       <label>Họ và tên</label
@@ -385,7 +385,7 @@ export default function KsonSulfurSilicateLanding() {
                   />
                   <button className="btn" type="submit">Đăng ký nhận mẫu</button>
                   <div className="form-foot">san_pham = K-SON Sulfur Silicate Liquid</div>
-                </form>
+                </LegacyForm>
           
               </div>
             </div>
