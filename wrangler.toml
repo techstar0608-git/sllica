@@ -1,0 +1,14 @@
+# Cấu hình Workers Static Assets — phục vụ thư mục out/ do `next build` xuất ra
+# (next.config.ts đang bật output: "export").
+#
+# Không có file worker nào: site thuần tĩnh, 2 form gửi thẳng lên Google Apps
+# Script từ trình duyệt (xem src/lib/lead.ts).
+name = "sllica"
+compatibility_date = "2026-08-25"
+
+[assets]
+directory = "out"
+
+# Mỗi route là một thư mục có index.html (trailingSlash: true), nên để Cloudflare
+# tự map /dich-vu -> /dich-vu/index.html và trả 404.html khi không khớp.
+not_found_handling = "404-page"

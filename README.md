@@ -51,20 +51,29 @@ phần riêng của nó (xã/tỉnh, diện tích, số cây, vấn đề) vào 
 
 Đổi endpoint qua `.env.example`.
 
-## Deploy — Cloudflare Pages
+## Deploy — Cloudflare Workers (Static Assets)
 
-Site xuất HTML tĩnh vào `out/` (`output: "export"` trong `next.config.ts`).
+Site xuất HTML tĩnh vào `out/` (`output: "export"` trong `next.config.ts`),
+`wrangler.toml` cấu hình Workers phục vụ thư mục đó. Không có file worker nào —
+site thuần tĩnh.
 
-Cấu hình trên Cloudflare Pages:
+Cấu hình khi tạo project trên Cloudflare:
 
 | Mục | Giá trị |
 |---|---|
-| Framework preset | Next.js (Static HTML Export) |
 | Build command | `npm run build` |
-| Build output directory | `out` |
-| Node version | 20 trở lên |
+| Deploy command | `npx wrangler deploy` |
+
+Deploy tay:
+
+```bash
+npm run build && npx wrangler deploy
+```
 
 `public/_headers` đặt sẵn security header và cache cho `/_next/static/*`.
+
+`trailingSlash: true` nên `/dich-vu` được Cloudflare tự chuyển sang
+`/dich-vu/` (307) rồi trả đúng trang.
 
 Xem trước bản tĩnh ở local:
 
