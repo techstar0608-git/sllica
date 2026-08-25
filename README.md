@@ -38,12 +38,39 @@ Sửa nội dung thì sửa ở đây, không sửa trong `src/app/`.
 
 ## Form
 
-- `/dang-ky-khao-sat` → `src/app/actions.ts`. Chưa set `SILICA_SHEETS_WEBHOOK_URL`
-  thì lead ghi ra log server (không mất, nhưng chưa vào Sheets).
-- Landing page cũ → `src/app/landing/kson-sulfur-silicate/actions.ts`, đã nối sẵn
-  Apps Script của bản WordPress.
+Cả 2 form gửi thẳng lên Google Apps Script từ trình duyệt (`src/lib/lead.ts`),
+vì site build ở chế độ static export nên không có server.
 
-Xem `.env.example`.
+Tên trường giữ đúng như bản WordPress cũ (`hoten`, `sdt`, `email`, `cty`,
+`mucdich`) để Apps Script và sheet đang chạy không phải sửa. Form khảo sát gộp
+phần riêng của nó (xã/tỉnh, diện tích, số cây, vấn đề) vào `mucdich`.
+
+> Endpoint dùng `mode: "no-cors"` nên trình duyệt **không đọc được response** —
+> gửi xong là chuyển sang `/cam-on`, không phân biệt được Apps Script nhận
+> thành công hay lỗi. Cần chắc chắn thì phải đổi Apps Script để trả CORS header.
+
+Đổi endpoint qua `.env.example`.
+
+## Deploy — Cloudflare Pages
+
+Site xuất HTML tĩnh vào `out/` (`output: "export"` trong `next.config.ts`).
+
+Cấu hình trên Cloudflare Pages:
+
+| Mục | Giá trị |
+|---|---|
+| Framework preset | Next.js (Static HTML Export) |
+| Build command | `npm run build` |
+| Build output directory | `out` |
+| Node version | 20 trở lên |
+
+`public/_headers` đặt sẵn security header và cache cho `/_next/static/*`.
+
+Xem trước bản tĩnh ở local:
+
+```bash
+npm run build && npx serve out
+```
 
 ## Style
 
