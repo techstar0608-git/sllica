@@ -1,13 +1,16 @@
 /**
- * Dữ liệu sản phẩm K-SON — bản chi tiết do khách hàng cung cấp ngày 25/08/2026,
- * GHI ĐÈ bảng sản phẩm rút gọn trong docs/BRIEF_4_DICH_VU.md theo quyết định của khách.
+ * Dữ liệu sản phẩm K-SON — theo BRIEF_TRANG_CHI_TIET_SAN_PHAM_KSON.md (26/08/2026).
  *
- * ⚠ CẦN NGUYỄN XUÂN HỮU DUYỆT LẠI — các điểm sau lệch với mục
- * "LƯU Ý TUÂN THỦ" ở cuối brief (khách đã chọn đăng nguyên văn):
- *   • Công bố SiO₂ hữu hiệu (23% / 15%) — brief mục 1 yêu cầu không nêu.
- *   • Công bố CaO thực tế (20% / 17%) — brief mục 3 yêu cầu chỉ ghi "Canxi 20%".
- *   • Sulfur Silicate dùng ngôn ngữ phòng trừ sâu bệnh và từ "hữu cơ" cho sản
- *     phẩm phân bón — brief mục 5 & 6 yêu cầu không dùng.
+ * Nguyên tắc tuân thủ (Phần III của brief), áp dụng cho toàn bộ file:
+ *  1. Không nêu tên cây trồng cụ thể ở bất kỳ đâu, TRỪ bảng liều `dosage` —
+ *     bảng đó chép nguyên văn nhãn đăng ký, giữ cả tên cây trồng ghi trên nhãn.
+ *     Không thêm dòng liều cho cây ngoài nhãn.
+ *  2. Hàm lượng ghi đúng nhãn phụ: "Canxi (Ca)", không ghi CaO; dùng "Silic",
+ *     không dùng "Silicon".
+ *  3. Tên hiển thị luôn là tên thương mại K-SON. `registeredName` chỉ dùng
+ *     trong bảng Hồ sơ pháp lý.
+ *  4. Chỉ hiển thị số QĐLH và mã số phân bón — KHÔNG hiển thị ngày ban hành.
+ *  5. Cả 5 sản phẩm đều đã có quyết định lưu hành.
  */
 
 export type ProductSpec = { label: string; value: string };
@@ -16,6 +19,20 @@ export type DosageRow = {
   target: string;
   amount: string;
   timing: string;
+};
+
+/** B3 · Thanh thông số nhanh — đúng 3 ô, icon + số lớn. */
+export type QuickSpec = { label: string; value: string };
+
+/**
+ * B7 · Bảng hướng dẫn sử dụng — chép nguyên văn nhãn đăng ký.
+ * Số cột thay đổi theo từng sản phẩm nên để headers/rows tự do.
+ */
+export type DosageTable = {
+  /** Câu tổng lượng đặt trên bảng, ví dụ "4,8 lít / 3.200 lít nước / ha / vụ". */
+  summary?: string;
+  headers: string[];
+  rows: string[][];
 };
 
 /** Dùng cho bộ lọc catalog (mục 3.6 §4). */
@@ -36,6 +53,18 @@ export type Product = {
   shelfLife: string;
   /** Trạng thái đăng ký — bắt buộc hiển thị trên mọi card và bảng. */
   status: string;
+  /** B2 · Badge ngang dưới tên sản phẩm. */
+  badges: string[];
+  /** B3 · Đúng 3 thông số nhanh. */
+  quickSpecs: [QuickSpec, QuickSpec, QuickSpec];
+  /** B4 · Điểm nổi bật — mỗi dòng dưới 12 từ. */
+  highlights: string[];
+  /** B7 · Bảng liều nguyên văn nhãn. Thay cho `dosage` khi có. */
+  dosageTable?: DosageTable;
+  /** B7 · Khối cảnh báo "Phương pháp sử dụng". */
+  usageMethod?: string;
+  /** B7 · Khối cảnh báo "Lưu ý khi pha chung thuốc BVTV". */
+  pesticideNote?: string;
   composition: ProductSpec[];
   benefits: { title: string; detail: string }[];
   targetCrops: string;
@@ -75,80 +104,86 @@ export const products: Product[] = [
     name: "K-SON Soil Conditioner",
     registeredName: "NSK High Country 2",
     category: "Chất cải tạo đất / Phân bón trung – vi lượng",
-    packaging: "Bao 20 kg — nhập khẩu nguyên kiện từ Hàn Quốc. Dạng viên (granule), kích cỡ hạt 3 – 5 mm.",
+    packaging: "Bao 20kg — dạng hạt 3 – 5 mm",
     origin: "Saturn Bio Tech Co., Ltd. — Hàn Quốc",
     fertilizerCode: "28190",
-    circulationDecision: "1995/QĐ-BVTV-PB ngày 31/08/2023",
-    shelfLife: "3 năm kể từ ngày sản xuất",
-    status: "Đã đăng ký lưu hành tại Việt Nam (mã 28190)",
+    circulationDecision: "1995/QĐ-BVTV-PB",
+    shelfLife: "36 tháng kể từ ngày sản xuất",
+    status: "Đã đăng ký lưu hành",
+    badges: ["Nhập khẩu Hàn Quốc", "Đã đăng ký lưu hành", "Bao 20kg"],
+    quickSpecs: [
+      { label: "Canxi", value: "Ca 20%" },
+      { label: "Magie", value: "Mg 1%" },
+      { label: "Quy cách", value: "Bao 20kg" },
+    ],
+    highlights: [
+      "Dạng hạt, tan chậm, tác dụng kéo dài",
+      "Bổ sung Canxi, Magie, Sắt cho đất",
+      "Không phát hiện As, Cd, Hg, Pb",
+      "Nhập khẩu nguyên kiện từ Hàn Quốc",
+    ],
     composition: [
-      { label: "Canxi (CaO)", value: "20%" },
-      { label: "Magiê (MgO)", value: "1%" },
+      { label: "Canxi (Ca)", value: "20%" },
+      { label: "Magie (Mg)", value: "1%" },
       { label: "Sắt (Fe)", value: "1.000 ppm" },
-      { label: "Công nghệ Alkaline", value: "Có — hỗ trợ điều hòa pH đất" },
-      { label: "Kim loại nặng (As, Cd, Hg, Pb)", value: "Không phát hiện" },
+      { label: "Độ ẩm", value: "≤ 3%" },
+      { label: "Dạng", value: "Hạt 3 – 5 mm" },
+      { label: "Quy cách", value: "Bao 20kg" },
+      { label: "Hạn sử dụng", value: "36 tháng kể từ ngày sản xuất" },
     ],
     benefits: [
       {
         title: "Cải tạo đất",
-        detail: "Cải thiện cấu trúc đất, tăng khả năng giữ nước và dinh dưỡng.",
-      },
-      {
-        title: "Nâng pH đất",
         detail:
-          "Điều hòa pH đất từ từ, bền vững nhờ công nghệ Alkaline, không gây sốc đất như vôi.",
+          "Cải thiện cấu trúc đất, tăng khả năng giữ nước và dinh dưỡng, điều hòa pH đất.",
       },
       {
-        title: "Kiểm soát kim loại nặng trong đất",
+        title: "Bổ sung trung lượng",
         detail:
-          "Sản phẩm sạch tuyệt đối kim loại nặng, hỗ trợ giảm tích lũy kim loại nặng trong đất canh tác.",
+          "Cung cấp Canxi hỗ trợ vách tế bào, Magie tham gia quang hợp, Sắt là vi lượng thiết yếu.",
       },
       {
-        title: "Bổ sung trung lượng cho đất",
+        title: "Sản phẩm sạch",
         detail:
-          "Cung cấp Canxi, Magiê, Sắt — các dưỡng chất trung – vi lượng thiết yếu cho đất trồng.",
-      },
-      {
-        title: "Hỗ trợ hiệu quả phân bón",
-        detail: "Tăng hiệu quả sử dụng phân bón NPK khi đất có pH cân bằng.",
+          "Không phát hiện kim loại nặng As, Cd, Hg, Pb trong kết quả kiểm nghiệm.",
       },
     ],
-    targetCrops:
-      "Đất trồng cần cải tạo: đất chua, đất bạc màu, đất tích lũy kim loại nặng.",
-    applicationMethod:
-      "Bón vào đất cần cải tạo (rải đều trên bề mặt đất hoặc trộn vào đất trước khi canh tác).",
-    dosage: [
-      {
-        target: "Đất trồng cần cải tạo",
-        amount: "200 – 300 kg/ha/lần",
-        timing:
-          "2 – 3 lần/vụ. Rải đều trên bề mặt đất, tưới nước sau khi bón để sản phẩm ngấm vào đất.",
-      },
-    ],
-    usageNotes: ["Có thể kết hợp với phân NPK và phân hữu cơ."],
+    targetCrops: "Đất trồng cần cải tạo.",
+    applicationMethod: "Bón gốc.",
+    dosage: [],
+    dosageTable: {
+      headers: ["Nhóm cây trồng", "Liều lượng", "Cách bón"],
+      rows: [
+        ["Cây ăn trái", "200 – 300 kg/ha", "Bón theo giai đoạn trong vụ"],
+        ["Rau màu", "250 kg/ha/vụ", "Bón lót trước khi gieo trồng"],
+      ],
+    },
+    usageMethod:
+      "Bón gốc, rải đều theo hình chiếu tán, bón xa gốc. Có thể kết hợp với phân NPK và phân hữu cơ đang sử dụng, không cần thay đổi quy trình bón phân hiện tại.",
+    usageNotes: [],
     storage: "Nơi khô ráo, thoáng mát, tránh ánh sáng trực tiếp.",
-    roleInProgram: "Cải tạo đất, nâng pH, bổ sung canxi – magie – sắt",
+    roleInProgram: "Cải tạo đất, bổ sung canxi – magie – sắt",
     form: "hat",
     useGroup: "cai-tao-dat",
-    cropTags: ["Sầu riêng", "Cà phê", "Hồ tiêu", "Cây ăn trái", "Lúa", "Rau màu"],
+    cropTags: ["Cây ăn trái", "Rau màu"],
     summary: [
-      "Nâng pH đất từ từ, bền vững nhờ công nghệ Alkaline — không gây sốc đất như vôi.",
-      "Bổ sung Canxi 20%, Magiê 1%, Sắt 1.000 ppm cho đất.",
+      "Chất cải tạo đất dạng hạt, tan chậm, tác dụng kéo dài.",
+      "Bổ sung Canxi 20%, Magie 1%, Sắt 1.000 ppm cho đất.",
       "Không phát hiện kim loại nặng As, Cd, Hg, Pb.",
     ],
-    keyComposition: "CaO 20% · MgO 1% · Fe 1.000 ppm",
+    keyComposition: "Ca 20% · Mg 1% · Fe 1.000 ppm",
     image: "/img/kson-soil-conditioner.png",
     imageBack: "/img/kson-soil-conditioner-back.png",
     icon: "/img/ic-soil.png",
     relatedServiceSlug: "suc-khoe-dat",
     faqs: [
       {
-        q: "Bón bao nhiêu cho một gốc sầu riêng?",
-        a: "Liều theo nhãn đăng ký là 200 – 300 kg/ha/lần, 2 – 3 lần/vụ. Quy ra gốc thì tuỳ mật độ trồng của vườn — kỹ thuật viên sẽ tính theo số cây thực tế.",
+        q: "Bón bao nhiêu cho vườn của tôi?",
+        a: "Liều theo nhãn đăng ký là 200 – 300 kg/ha với cây ăn trái và 250 kg/ha/vụ với rau màu. Quy ra từng gốc thì tuỳ mật độ trồng — kỹ thuật viên sẽ tính theo số cây thực tế khi khảo sát.",
       },
       {
         q: "Khác gì với bón vôi?",
-        a: "Vôi nâng pH nhanh nhưng hết tác dụng nhanh, dễ làm đất chai và mất kali. Sản phẩm này điều hòa pH từ từ và bền hơn, đồng thời bổ sung Canxi – Magiê – Sắt.",
+        a: "Sản phẩm ở dạng hạt 3 – 5 mm, tan chậm nên tác dụng kéo dài, đồng thời bổ sung Canxi, Magie và Sắt cho đất.",
       },
       {
         q: "Có bón chung với phân đang dùng được không?",
@@ -166,14 +201,29 @@ export const products: Product[] = [
     category: "Phân bón lá trung lượng, dạng lỏng",
     packaging: "Chai 500 ml",
     origin: "Saturn Bio Tech Co., Ltd. — Hàn Quốc",
+    registeredName: "Phân bón lá trung lượng Silic",
     fertilizerCode: "33947",
-    circulationDecision: "474/QĐ-TTTV-PB ngày 29/05/2026",
+    circulationDecision: "474/QĐ-TTTV-PB",
     shelfLife: "36 tháng kể từ ngày sản xuất",
-    status: "Đã đăng ký cho cây lúa (mã 33947)",
+    status: "Đã đăng ký lưu hành",
+    badges: ["Nhập khẩu Hàn Quốc", "Đã đăng ký lưu hành", "Chai 500ml"],
+    quickSpecs: [
+      { label: "Silic hữu hiệu", value: "SiO₂ₕₕ 23%" },
+      { label: "pH_H₂O", value: "12" },
+      { label: "Quy cách", value: "500ml" },
+    ],
+    highlights: [
+      "Hàm lượng Silic hữu hiệu cao",
+      "Giúp lá dày, cứng, giảm rụng lá do gió",
+      "Hỗ trợ cây chống sốc nhiệt, chống hạn",
+      "Tăng hiệu quả sử dụng phân bón",
+    ],
     composition: [
-      { label: "Silic hữu hiệu (SiO₂ hữu hiệu)", value: "23%" },
-      { label: "pH (H₂O)", value: "12" },
+      { label: "Silic hữu hiệu (SiO₂ₕₕ)", value: "23%" },
+      { label: "pH_H₂O", value: "12" },
       { label: "Tỷ trọng", value: "1,4" },
+      { label: "Quy cách", value: "Chai 500ml" },
+      { label: "Hạn sử dụng", value: "36 tháng kể từ ngày sản xuất" },
     ],
     benefits: [
       {
@@ -192,60 +242,64 @@ export const products: Product[] = [
           "Silic hỗ trợ cây duy trì quang hợp và giảm thoát hơi nước trong điều kiện nắng nóng, khô hạn kéo dài.",
       },
       {
-        title: "Tăng hiệu quả sử dụng phân bón",
+        title: "Tăng hiệu suất quang hợp",
         detail:
-          "Trên cây lúa: giúp thân cứng, chống đổ ngã; cải thiện hiệu quả sử dụng đạm, giảm lượng phân đạm cần bón.",
+          "Tăng hiệu suất quang hợp khi không đủ ánh nắng. Tăng hiệu quả sử dụng phân bón.",
+      },
+      {
+        title: "Đặc biệt trên cây lúa",
+        detail:
+          "Giúp thân cứng, chống đổ ngã; cải thiện hiệu quả sử dụng đạm, giảm lượng phân đạm cần bón.",
       },
     ],
-    targetCrops:
-      "Cây lúa (đối tượng chính theo nhãn đăng ký); sầu riêng, cà phê, hồ tiêu và các cây ăn trái khác.",
+    targetCrops: "Theo nhãn đăng ký.",
     applicationMethod: "Bón lá (phun qua lá).",
-    dosage: [
-      {
-        target: "Cây lúa (theo nhãn đăng ký)",
-        amount: "2.250 ml / 1.500 lít nước / ha / vụ",
-        timing: "Phun 3 lần: 10, 22 và 40 ngày sau sạ",
-      },
-      {
-        target: "Cây ăn trái (sầu riêng, cà phê, hồ tiêu) *",
-        amount:
-          "Pha loãng tương đương ~1,5 ml/lít nước (khoảng 24 ml/bình 16 lít)",
-        timing:
-          "Phun định kỳ 15 – 20 ngày/lần, ưu tiên giai đoạn ra lá non và trước cao điểm nắng nóng/khô hạn",
-      },
-    ],
-    dosageNote:
-      "(*) Liều dùng cho cây ăn trái là khuyến cáo tham khảo dựa trên tỷ lệ pha loãng tương đương, chưa phải liều đăng ký chính thức trên nhãn cho nhóm cây trồng này.",
-    usageNotes: [
-      "Phun ướt đều hai mặt lá, vào sáng sớm hoặc chiều mát. Lắc kỹ trước khi dùng.",
-    ],
+    dosage: [],
+    dosageTable: {
+      summary: "2.250ml / 1.500 lít nước / ha / vụ. Chia phun 3 lần.",
+      headers: ["Giai đoạn", "Liều lượng"],
+      rows: [
+        ["Lần 1 — 10 ngày sau sạ", "Pha 750ml / 500 lít nước / lần"],
+        ["Lần 2 — 22 ngày sau sạ", "Pha 750ml / 500 lít nước / lần"],
+        ["Lần 3 — 40 ngày sau sạ", "Pha 750ml / 500 lít nước / lần"],
+      ],
+    },
+    usageMethod:
+      "Hòa phân bón với nước rồi phun đều bề mặt lá vào lúc sáng sớm hoặc chiều mát.",
+    pesticideNote:
+      "Pha loãng phân bón lá với nước trước khi pha chung với thuốc BVTV. Không pha chung với thuốc có tính axit mạnh hoặc thuốc chứa đồng (Cu).",
+    usageNotes: [],
     storage:
       "Nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp. Bảo quản 5 – 30°C sau khi mở nắp.",
     roleInProgram: "Dinh dưỡng silicate dạng lỏng",
     form: "long",
     useGroup: "dinh-duong",
-    cropTags: ["Lúa", "Sầu riêng", "Cà phê", "Hồ tiêu", "Cây ăn trái"],
+    cropTags: ["Lúa"],
     summary: [
       "Silic hữu hiệu 23%, giúp lá dày và cứng hơn, giảm rụng lá do gió mạnh.",
       "Tăng sức đề kháng của cây trước nấm bệnh, côn trùng và điều kiện bất lợi.",
-      "Đã đăng ký cho cây lúa — mã phân bón 33947.",
+      "Hỗ trợ cây chống sốc nhiệt, chống hạn.",
     ],
-    keyComposition: "SiO₂ hữu hiệu 23%",
+    keyComposition: "SiO₂ₕₕ 23%",
     image: "/img/kson-silicate-liquid.png",
     icon: "/img/ic-magleaf.png",
     relatedServiceSlug: "quy-trinh-cham-soc",
     faqs: [
       {
-        q: "Sản phẩm đã đăng ký cho sầu riêng chưa?",
-        a: "Chưa. Nhãn đăng ký hiện tại là cho cây lúa. Liều dùng cho cây ăn trái là khuyến cáo tham khảo theo tỷ lệ pha loãng tương đương.",
+        q: "Silic có tác dụng gì với cây trồng?",
+        a: "Silic tích lũy trong biểu bì lá, tạo hàng rào vật lý giúp lá dày và cứng hơn, đồng thời hỗ trợ cây chống chịu nấm bệnh, côn trùng và điều kiện bất lợi.",
       },
       {
-        q: "Phun vào lúc nào trong ngày?",
-        a: "Phun ướt đều hai mặt lá, vào sáng sớm hoặc chiều mát. Lắc kỹ trước khi dùng.",
+        q: "Vì sao lá dày lại giảm rụng do gió?",
+        a: "Silic tích lũy ở biểu bì làm mô lá dày và cứng hơn, nhờ đó lá bám chắc hơn và ít bị tổn thương khi gặp gió mạnh.",
       },
       {
-        q: "Bao lâu phun một lần?",
-        a: "Với cây ăn trái, khuyến cáo tham khảo là 15 – 20 ngày/lần, ưu tiên giai đoạn ra lá non và trước cao điểm nắng nóng, khô hạn.",
+        q: "Phun vào thời điểm nào trong ngày là tốt nhất?",
+        a: "Sáng sớm hoặc chiều mát. Hòa phân bón với nước rồi phun đều bề mặt lá.",
+      },
+      {
+        q: "Dùng cho cây trồng khác ngoài nhãn được không?",
+        a: "Bảng liều trên trang này là liều đã đăng ký theo nhãn. Với cây trồng khác, vui lòng liên hệ đội kỹ thuật Silica để được tư vấn theo điều kiện thực tế của vườn.",
       },
       {
         q: "Bảo quản thế nào?",
@@ -254,271 +308,299 @@ export const products: Product[] = [
     ],
   },
   {
-    slug: "kson-sulfur-silicate-liquid",
-    name: "K-SON Sulfur Silicate Liquid",
+    slug: "kson-sulfur-silicate",
+    name: "K-SON Sulfur Silicate",
+    registeredName: "Phân bón lá trung lượng Lưu huỳnh – Silic",
     category: "Phân bón lá trung lượng, dạng lỏng",
-    packaging: "Chai 500 ml",
+    packaging: "Chai 500ml",
     origin: "Saturn Bio Tech Co., Ltd. — Hàn Quốc",
     fertilizerCode: "33948",
-    circulationDecision: "474/QĐ-TTTV-PB ngày 29/05/2026",
+    circulationDecision: "474/QĐ-TTTV-PB",
     shelfLife: "36 tháng kể từ ngày sản xuất",
-    status: "Đã đăng ký cho cây cà chua (mã 33948)",
+    status: "Đã đăng ký lưu hành",
+    badges: ["Nhập khẩu Hàn Quốc", "Đã đăng ký lưu hành", "Chai 500ml"],
+    quickSpecs: [
+      { label: "Lưu huỳnh siêu mịn", value: "S 16%" },
+      { label: "Silic hữu hiệu", value: "SiO₂ₕₕ 15%" },
+      { label: "Quy cách", value: "500ml" },
+    ],
+    highlights: [
+      "Lưu huỳnh dạng đơn chất S⁰, hạt siêu mịn",
+      "Kết hợp Silic tăng lớp bảo vệ bề mặt lá",
+      "Không chứa hoạt chất thuốc BVTV",
+      "Nhập khẩu nguyên chai từ Hàn Quốc",
+    ],
     composition: [
-      { label: "Lưu huỳnh (S)", value: "16%" },
-      { label: "Silic hữu hiệu (SiO₂ hữu hiệu)", value: "15%" },
-      { label: "pH (H₂O)", value: "11,6" },
+      { label: "Silic hữu hiệu (SiO₂ₕₕ)", value: "15%" },
+      { label: "Lưu huỳnh siêu mịn (S)", value: "16%" },
+      { label: "pH_H₂O", value: "11,6" },
       { label: "Tỷ trọng", value: "1,4" },
+      { label: "Quy cách", value: "Chai 500ml" },
+      { label: "Hạn sử dụng", value: "36 tháng kể từ ngày sản xuất" },
     ],
     benefits: [
       {
-        title: "Kháng nấm & nhện vượt trội",
+        title: "Tăng sức đề kháng",
         detail:
-          "Lưu huỳnh sinh học là hoạt chất diệt nấm và nhện kinh điển, kết hợp Silic tạo hàng rào vật lý bảo vệ bề mặt lá — hỗ trợ phòng trừ thán thư, sương mai, phấn trắng, đạo ôn, rệp, bọ trĩ, nhện đỏ, ruồi trắng...",
+          "Lưu huỳnh đơn chất (S⁰) dạng hạt siêu mịn, giúp cây tăng khả năng chống chịu nấm bệnh, nhện và côn trùng gây hại.",
       },
       {
-        title: "Tăng hương vị đặc trưng của trái",
+        title: "Silic tăng cường lớp bảo vệ bề mặt lá",
         detail:
-          "Lưu huỳnh tham gia tạo các hợp chất sulfide tự nhiên trong trái, góp phần tăng hương vị đặc trưng của sầu riêng.",
+          "Silic hữu hiệu tích lũy ở biểu bì lá, tạo lớp bảo vệ tự nhiên, hỗ trợ cây chống chịu điều kiện bất lợi (nắng hạn, mưa nhiều, ẩm độ cao).",
       },
       {
-        title: "Hữu cơ, không dư lượng thuốc BVTV",
+        title: "Hỗ trợ hương vị đặc trưng của trái",
         detail:
-          "Không liên quan đến PLS (Pesticide Registration Scheme), an toàn cho người sử dụng và không ảnh hưởng thiên địch có lợi trong vườn.",
+          "Lưu huỳnh là dưỡng chất tham gia hình thành các hợp chất sulfide tự nhiên, góp phần vào hương vị đặc trưng của trái.",
       },
       {
-        title: "Dùng được đa cây trồng",
+        title: "An toàn, không tồn dư thuốc BVTV",
         detail:
-          "Phù hợp cho lúa, ớt, dưa chuột, dưa lê, cải thảo, dâu tây, cà chua, xoài, nhãn, sầu riêng, cà phê, hồ tiêu...",
+          "Là phân bón trung lượng dạng khoáng, không chứa hoạt chất thuốc bảo vệ thực vật, an toàn cho người sử dụng và cây trồng khi dùng đúng liều khuyến cáo.",
       },
     ],
-    targetCrops:
-      "Cà chua (đối tượng chính theo nhãn đăng ký); sầu riêng, cà phê, hồ tiêu, lúa và nhiều loại cây ăn trái, rau màu khác.",
+    targetCrops: "Theo nhãn đăng ký.",
     applicationMethod: "Bón lá (phun qua lá).",
-    dosage: [
-      {
-        target: "Cà chua trên đất đỏ vàng (theo nhãn đăng ký)",
-        amount: "4,8 lít / 3.200 lít nước / ha / vụ",
-        timing: "Phun 4 lần, mỗi lần 1,2 lít / 800 lít nước / ha",
-      },
-      {
-        target: "Cây ăn trái, rau màu khác *",
-        amount: "Pha loãng ~1.000 lần (khoảng 20 ml / bình 16 – 20 lít nước)",
-        timing:
-          "Phòng ngừa: phun định kỳ 5 – 7 ngày/lần. Đang có bệnh: phun 2 – 3 lần liên tiếp",
-      },
-    ],
-    dosageNote:
-      "(*) Liều dùng cho nhóm cây trồng ngoài cà chua là khuyến cáo tham khảo theo tỷ lệ pha loãng tương đương, chưa phải liều đăng ký chính thức trên nhãn cho từng loại cây.",
-    usageNotes: [
-      "Phun ướt đều lá trên và lá dưới. Tránh phun khi nhiệt độ trên 30°C hoặc dưới nắng gắt.",
-      "Phun 2 lần nồng độ thấp hiệu quả hơn 1 lần nồng độ cao.",
-      "Lắc kỹ trước khi dùng. Ngưng phun trước thu hoạch theo thời gian cách ly khuyến cáo trên nhãn.",
-    ],
+    dosage: [],
+    dosageTable: {
+      summary:
+        "4,8 lít phân bón / 3.200 lít nước / ha / vụ. Chia phun 4 lần.",
+      headers: ["Giai đoạn", "Liều lượng"],
+      rows: [
+        ["Lần 1 — bắt đầu ra hoa đầu tiên", "Pha 1,2 lít / 800 lít nước / ha"],
+        ["Lần 2 — 7 ngày sau phun lần 1", "Pha 1,2 lít / 800 lít nước / ha"],
+        ["Lần 3 — 7 ngày sau phun lần 2", "Pha 1,2 lít / 800 lít nước / ha"],
+        ["Lần 4 — 7 ngày sau phun lần 3", "Pha 1,2 lít / 800 lít nước / ha"],
+      ],
+    },
+    usageMethod: "Hòa phân bón với nước rồi phun trên lá vào lúc sáng sớm hoặc chiều mát.",
+    pesticideNote: "Pha loãng phân bón lá với nước trước khi pha chung với thuốc BVTV. Không pha chung với thuốc có tính axit mạnh hoặc thuốc chứa đồng (Cu).",
+    usageNotes: [],
     storage:
       "Nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp. Bảo quản 5 – 30°C sau khi mở nắp.",
-    roleInProgram: "Dinh dưỡng silicate có lưu huỳnh nguyên tố S⁰",
+    roleInProgram: "Dinh dưỡng silicate có lưu huỳnh đơn chất S⁰",
     form: "long",
     useGroup: "dinh-duong",
-    cropTags: ["Cà chua", "Sầu riêng", "Cà phê", "Hồ tiêu", "Lúa", "Rau màu", "Cây ăn trái"],
+    cropTags: [],
     summary: [
-      "Lưu huỳnh 16% kết hợp Silic hữu hiệu 15%.",
-      "Góp phần tăng hương vị đặc trưng của trái sầu riêng.",
-      "Đã đăng ký cho cây cà chua — mã phân bón 33948.",
+      "Lưu huỳnh siêu mịn 16% kết hợp Silic hữu hiệu 15%.",
+      "Giúp cây tăng khả năng chống chịu nấm bệnh, nhện và côn trùng gây hại.",
+      "Không chứa hoạt chất thuốc bảo vệ thực vật.",
     ],
-    keyComposition: "S 16% · SiO₂ hữu hiệu 15%",
+    keyComposition: "S 16% · SiO₂ₕₕ 15%",
     image: "/img/kson-sulfur-silicate-liquid.png",
     icon: "/img/ic-bio.png",
     relatedServiceSlug: "quy-trinh-cham-soc",
     faqs: [
       {
-        q: "Sản phẩm đã đăng ký cho sầu riêng chưa?",
-        a: "Chưa. Nhãn đăng ký hiện tại là cho cây cà chua. Liều dùng cho nhóm cây trồng khác là khuyến cáo tham khảo.",
+        q: "Lưu huỳnh đơn chất S⁰ khác gì lưu huỳnh dạng sulfate?",
+        a: "Sản phẩm dùng lưu huỳnh ở dạng đơn chất (S⁰) hạt siêu mịn, khác với lưu huỳnh dạng sulfate trong các loại phân bón thông thường.",
       },
       {
-        q: "Phun khi trời nắng được không?",
-        a: "Không nên. Tránh phun khi nhiệt độ trên 30°C hoặc dưới nắng gắt.",
+        q: "Sản phẩm này có phải là thuốc trừ nấm không?",
+        a: "Không. Đây là phân bón lá trung lượng dạng khoáng, không chứa hoạt chất thuốc bảo vệ thực vật. Theo nhãn đăng ký, sản phẩm giúp cây tăng khả năng chống chịu nấm bệnh, nhện và côn trùng gây hại.",
       },
       {
-        q: "Phun đậm đặc một lần có tốt hơn không?",
-        a: "Không. Phun 2 lần nồng độ thấp hiệu quả hơn 1 lần nồng độ cao.",
+        q: "Có pha chung với phân bón lá khác được không?",
+        a: "Khi pha chung với thuốc bảo vệ thực vật, cần pha loãng phân bón lá với nước trước. Không pha chung với thuốc có tính axit mạnh hoặc thuốc chứa đồng (Cu). Với các sản phẩm khác, vui lòng liên hệ đội kỹ thuật để được tư vấn.",
       },
       {
-        q: "Có cần ngưng phun trước thu hoạch không?",
-        a: "Có. Ngưng phun trước thu hoạch theo thời gian cách ly khuyến cáo trên nhãn.",
+        q: "pH 11,6 có cao quá không, phun lên lá có sao không?",
+        a: "Sản phẩm được phun sau khi đã hòa với nước theo đúng liều trên nhãn, nên nồng độ khi tới lá đã giảm nhiều lần. Phun vào sáng sớm hoặc chiều mát theo hướng dẫn.",
       },
     ],
   },
   {
     slug: "kson-dr-calcium",
     name: "K-SON Dr. Calcium",
-    line: "Dòng sản phẩm Canxi + Bo",
+    registeredName: "Phân bón lá Canxibo Plus",
     category: "Phân bón lá trung – vi lượng, dạng lỏng",
-    packaging: "Chai 500 ml",
+    packaging: "Chai 500ml",
     origin: "Saturn Bio Tech Co., Ltd. — Hàn Quốc",
-    shelfLife: "Theo công bố trên nhãn phụ",
-    status: "Đang hoàn tất đăng ký",
+    fertilizerCode: "21818",
+    circulationDecision: "431/QĐ-BVTV-PB",
+    shelfLife: "36 tháng kể từ ngày sản xuất",
+    status: "Đã đăng ký lưu hành",
+    badges: ["Nhập khẩu Hàn Quốc", "Đã đăng ký lưu hành", "Chai 500ml"],
+    quickSpecs: [
+      { label: "Canxi", value: "Ca 10%" },
+      { label: "Bo", value: "B 11.000 ppm" },
+      { label: "Quy cách", value: "500ml" },
+    ],
+    highlights: [
+      "Kết hợp Canxi và Bo trong một sản phẩm",
+      "Hàm lượng Bo cao, dạng dễ hấp thu",
+      "pH trung tính, an toàn khi phun lá",
+      "Hỗ trợ giai đoạn ra hoa – đậu trái",
+    ],
     composition: [
-      { label: "Canxi (CaO)", value: "17%" },
-      { label: "Bo (B)", value: "4,5%" },
+      { label: "Canxi (Ca)", value: "10%" },
+      { label: "Bo (B)", value: "11.000 ppm" },
+      { label: "pH_H₂O", value: "7" },
+      { label: "Tỷ trọng", value: "1,5" },
+      { label: "Quy cách", value: "Chai 500ml" },
+      { label: "Hạn sử dụng", value: "36 tháng kể từ ngày sản xuất" },
     ],
     benefits: [
       {
-        title: "Chắc cùi, chống nứt trái",
-        detail:
-          "Canxi gia cố vách tế bào, Bo là chất kết nối pectin — giúp cùi/thịt trái chắc, hạn chế nứt trái.",
+        title: "Bổ sung Canxi và Bo dễ hấp thu",
+        detail: "Cung cấp đồng thời Canxi và Bo ở dạng cây dễ hấp thu qua lá.",
       },
       {
-        title: "Giảm sượng cơm, cải thiện chất lượng cùi",
+        title: "Hỗ trợ phát triển hạt phấn, tăng tỷ lệ đậu trái",
         detail:
-          "Bo có vai trò vận chuyển tinh bột từ lá vào trái; thiếu Bo khiến tinh bột tích lũy ở lá thay vì vào cùi, gây hiện tượng sượng. Bổ sung Ca–Bo đúng giai đoạn giúp cải thiện chất lượng cùi.",
+          "Bo tham gia vào quá trình phát triển hạt phấn, hỗ trợ tăng tỷ lệ đậu trái.",
       },
       {
-        title: "Tăng đậu trái, giảm rụng trái non",
+        title: "Giảm nứt và rụng trái do thiếu Canxi – Bo",
         detail:
-          "Bo hỗ trợ sức sống hạt phấn và quá trình thụ phấn, giúp tăng tỷ lệ đậu trái và giảm rụng trái non.",
+          "Bổ sung đầy đủ Canxi và Bo giúp hạn chế hiện tượng nứt trái và rụng trái do thiếu hai dưỡng chất này.",
       },
     ],
-    targetCrops:
-      "Sầu riêng, cây ăn trái (xoài, nhãn, chôm chôm, cam, bưởi...), cà phê, hồ tiêu.",
+    targetCrops: "Theo nhãn đăng ký.",
     applicationMethod: "Bón lá (phun qua lá).",
-    dosage: [
-      {
-        target: "Trước và đầu giai đoạn ra hoa",
-        amount: "1 chai 500 ml / 400 lít nước (~20 – 30 ml / bình 16 lít)",
-        timing: "Kích thích phân hóa mầm hoa, tăng sức sống hạt phấn",
-      },
-      {
-        target: "Sau đậu trái non",
-        amount: "Liều tương tự",
-        timing:
-          "Phun cách 10 – 15 ngày/lần. Giữ trái, giảm rụng sinh lý, củng cố vỏ trái non",
-      },
-      {
-        target: "Giai đoạn phát triển trái",
-        amount: "Liều tương tự",
-        timing:
-          "Phun cách 10 – 15 ngày/lần. Chắc cùi, chống nứt trái, giảm sượng cơm",
-      },
-    ],
-    dosageNote:
-      "Sản phẩm chưa có số liệu hướng dẫn sử dụng chính thức từ nhãn phụ Saturn Bio Tech / Silica. Liều lượng trên là đề xuất tham khảo, xây dựng dựa trên nghiên cứu khoa học về vai trò Canxi–Bo và tỷ lệ pha loãng phổ biến của các sản phẩm Canxi–Bo dạng lỏng cùng phân khúc trên thị trường Việt Nam. Cần xác nhận chính thức với Saturn Bio Tech trước khi in nhãn phụ hoặc công bố cố định trên Shopee/website.",
-    usageNotes: [
-      "Phun ướt đều tán, ưu tiên mặt lá non và chùm hoa/trái non. Phun vào sáng sớm hoặc chiều mát.",
-      "Không pha chung với phân lân/MKP hoặc các sản phẩm có tính kiềm mạnh; nên luân phiên cách 3 – 5 ngày.",
-      "Không lạm dụng vào cuối giai đoạn nuôi trái nếu cây đã đủ Canxi và trái đã cứng vỏ.",
-    ],
+    dosage: [],
+    dosageTable: {
+      summary:
+        "Pha 2 – 2,5 lít với 320 lít nước, bón cho 1 ha/lần. Phun 3 lần/vụ.",
+      headers: ["Lần", "Cây lương thực", "Cây rau"],
+      rows: [
+        ["Lần 1", "12 ngày sau trồng", "7 ngày sau trồng"],
+        ["Lần 2", "22 ngày sau trồng", "15 ngày sau trồng"],
+        ["Lần 3", "45 ngày sau trồng", "20 ngày sau trồng"],
+      ],
+    },
+    usageMethod: "Hòa phân bón với nước rồi phun trên lá vào lúc sáng sớm hoặc chiều mát.",
+    pesticideNote: "Pha loãng phân bón lá với nước trước khi pha chung với thuốc BVTV. Không pha chung với thuốc có tính axit mạnh hoặc thuốc chứa đồng (Cu).",
+    usageNotes: [],
     storage: "Nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp.",
-    roleInProgram: "Canxi – Bo, giai đoạn đậu trái đến ~60 ngày sau đậu",
+    roleInProgram: "Canxi – Bo, giai đoạn ra hoa và đậu trái",
     form: "long",
     useGroup: "canxi",
-    cropTags: ["Sầu riêng", "Cây ăn trái", "Cà phê", "Hồ tiêu"],
+    cropTags: [],
     summary: [
-      "Canxi 17% kết hợp Bo 4,5%.",
-      "Hỗ trợ chắc cùi, chống nứt trái và giảm sượng cơm.",
-      "Đang hoàn tất đăng ký lưu hành tại Việt Nam.",
+      "Canxi 10% kết hợp Bo 11.000 ppm.",
+      "Hỗ trợ phát triển hạt phấn, tăng tỷ lệ đậu trái.",
+      "pH trung tính, an toàn khi phun lá.",
     ],
-    keyComposition: "CaO 17% · B 4,5%",
+    keyComposition: "Ca 10% · B 11.000 ppm",
     image: "/img/kson-dr-calcium.png",
     icon: "/img/ic-apple.png",
     relatedServiceSlug: "quy-trinh-cham-soc",
     faqs: [
       {
-        q: "Sản phẩm đã được cấp phép lưu hành chưa?",
-        a: "Đang hoàn tất đăng ký. Chúng tôi sẽ cập nhật số quyết định lưu hành ngay khi có.",
+        q: "Vì sao Canxi và Bo phải đi cùng nhau?",
+        a: "Canxi tham gia cấu tạo vách tế bào, còn Bo hỗ trợ vận chuyển Canxi và phát triển hạt phấn. Bổ sung đồng thời giúp cây tận dụng được cả hai dưỡng chất.",
       },
       {
-        q: "Liều dùng đã chính thức chưa?",
-        a: "Chưa. Liều trong bảng là đề xuất tham khảo, cần xác nhận chính thức với Saturn Bio Tech trước khi in nhãn phụ.",
+        q: "Thiếu Bo biểu hiện thế nào trên cây?",
+        a: "Thiếu Bo thường ảnh hưởng tới quá trình phát triển hạt phấn và đậu trái, kèm hiện tượng nứt hoặc rụng trái. Kỹ thuật viên sẽ đánh giá cụ thể khi khảo sát vườn.",
       },
       {
-        q: "Có pha chung với phân lân được không?",
-        a: "Không. Không pha chung với phân lân/MKP hoặc các sản phẩm có tính kiềm mạnh; nên luân phiên cách 3 – 5 ngày.",
+        q: "Phun Canxi qua lá có hiệu quả hơn bón gốc không?",
+        a: "Phun qua lá giúp bổ sung nhanh vào đúng giai đoạn cây cần. Đây là sản phẩm phân bón lá, dùng theo bảng liều trên nhãn.",
       },
       {
-        q: "Khác gì với Star Fish?",
-        a: "Dr. Calcium có thêm Bo, phù hợp giai đoạn ra hoa và đậu trái. Star Fish là Canxi đơn, dùng linh hoạt hơn khi cần lặp lại nhiều lần.",
+        q: "Có pha chung với phân bón lá khác được không?",
+        a: "Khi pha chung với thuốc bảo vệ thực vật, cần pha loãng phân bón lá với nước trước, không pha chung với thuốc có tính axit mạnh hoặc thuốc chứa đồng (Cu). Với sản phẩm khác, vui lòng liên hệ đội kỹ thuật.",
       },
     ],
   },
   {
-    slug: "kson-star-fish",
-    name: "K-SON Star Fish",
-    line: "Dòng sản phẩm Canxi đơn",
+    slug: "kson-starfish",
+    name: "K-SON Starfish",
+    registeredName: "Phân bón lá AT-Fósforo",
     category: "Phân bón lá trung lượng, dạng lỏng",
-    packaging: "Chai 500 ml",
+    packaging: "Chai 500ml",
     origin: "Saturn Bio Tech Co., Ltd. — Hàn Quốc",
-    shelfLife: "Theo công bố trên nhãn phụ",
-    status: "Đang hoàn tất đăng ký",
-    composition: [{ label: "Canxi (CaO)", value: "17%" }],
+    fertilizerCode: "15025",
+    circulationDecision: "646/QĐ-TTTV-PB",
+    shelfLife: "36 tháng kể từ ngày sản xuất",
+    status: "Đã đăng ký lưu hành",
+    badges: ["Nhập khẩu Hàn Quốc", "Đã đăng ký lưu hành", "Chai 500ml"],
+    quickSpecs: [
+      { label: "Canxi", value: "Ca 7,15%" },
+      { label: "Đạm tổng số", value: "N 2%" },
+      { label: "Quy cách", value: "500ml" },
+    ],
+    highlights: [
+      "Canxi dạng dễ hấp thu qua lá",
+      "Kết hợp đạm hỗ trợ phát triển mô",
+      "Giúp mô cây cứng cáp hơn",
+      "Nhập khẩu nguyên chai từ Hàn Quốc",
+    ],
+    composition: [
+      { label: "Đạm tổng số (N_ts)", value: "2%" },
+      { label: "Canxi (Ca)", value: "7,15%" },
+      { label: "pH_H₂O", value: "4,9" },
+      { label: "Tỷ trọng", value: "1,19" },
+      { label: "Quy cách", value: "Chai 500ml" },
+      { label: "Hạn sử dụng", value: "36 tháng kể từ ngày sản xuất" },
+    ],
     benefits: [
       {
-        title: "Chắc trái, chống nứt trái",
-        detail:
-          "Canxi là thành phần chính của pectin trong vách tế bào, giúp vách tế bào cứng chắc, hạn chế nứt trái, thối trái.",
+        title: "Bổ sung canxi dễ hấp thu",
+        detail: "Cung cấp Canxi ở dạng cây dễ hấp thu qua lá.",
       },
       {
-        title: "Tăng khả năng bảo quản sau thu hoạch",
+        title: "Hỗ trợ phát triển vách tế bào, giảm nứt và rụng trái",
         detail:
-          "Bổ sung Canxi giúp trái chắc, kéo dài thời gian bảo quản sau thu hoạch.",
+          "Canxi tham gia cấu tạo vách tế bào, giúp hạn chế hiện tượng nứt và rụng trái.",
       },
       {
-        title: "Lựa chọn Canxi đơn, linh hoạt",
-        detail:
-          "Không chứa Bo, phù hợp cho các giai đoạn không cần bổ sung Bo hoặc khi muốn bổ sung Canxi với tần suất linh hoạt hơn (Bo dễ gây ngộ độc nếu dùng lặp lại liều cao, trong khi Canxi đơn an toàn hơn khi lặp lại).",
+        title: "Tăng độ cứng cáp mô cây",
+        detail: "Kết hợp Canxi và đạm hỗ trợ mô cây phát triển cứng cáp hơn.",
       },
     ],
-    targetCrops:
-      "Sầu riêng, cây ăn trái, cây công nghiệp (cà phê, hồ tiêu), lúa và rau màu.",
-    applicationMethod: "Bón lá (phun qua lá).",
-    dosage: [
-      {
-        target: "Giai đoạn nuôi trái",
-        amount: "1 chai 500 ml / 400 lít nước (~20 – 30 ml / bình 16 lít)",
-        timing:
-          "Phun cách 10 – 15 ngày/lần. Chắc trái, chống nứt, tăng khối lượng trái",
-      },
-      {
-        target: "Sau thu hoạch",
-        amount: "Liều tương tự",
-        timing: "Phun 1 – 2 lần. Phục hồi cây, chuẩn bị cho vụ tiếp theo",
-      },
-    ],
-    dosageNote:
-      "Sản phẩm chưa có số liệu hướng dẫn sử dụng chính thức từ nhãn phụ Saturn Bio Tech / Silica. Liều lượng trên là đề xuất tham khảo, xây dựng dựa trên nghiên cứu khoa học về vai trò Canxi và tỷ lệ pha loãng phổ biến của các sản phẩm Canxi dạng lỏng cùng phân khúc trên thị trường Việt Nam. Cần xác nhận chính thức với Saturn Bio Tech trước khi in nhãn phụ hoặc công bố cố định trên Shopee/website.",
-    usageNotes: [
-      "Phun ướt đều tán, vào sáng sớm hoặc chiều mát. Lắc kỹ trước khi dùng.",
-      "Có thể kết hợp với hầu hết các loại phân bón lá và thuốc bảo vệ thực vật khác (trừ sản phẩm có tính kiềm mạnh).",
-    ],
+    targetCrops: "Theo nhãn đăng ký.",
+    applicationMethod:
+      "Pha loãng với nước rồi phun trực tiếp lên thân, lá. Phun 3 lần/vụ.",
+    dosage: [],
+    dosageTable: {
+      headers: ["Đối tượng cây trồng", "Liều lượng", "Giai đoạn"],
+      rows: [
+        [
+          "Cây lương thực",
+          "Pha 20 – 40 ml/bình 8 lít (1 – 2 lít/400 lít nước) phun cho 1 ha",
+          "Lần 1: sau gieo 7 – 10 ngày · Lần 2: sau lần 1 là 10 ngày · Lần 3: sau lần 2 là 10 ngày",
+        ],
+        [
+          "Cây rau màu",
+          "Pha 10 – 20 ml/bình 8 lít (0,5 – 1 lít/400 lít nước) phun cho 1 ha",
+          "Như trên",
+        ],
+      ],
+    },
+    usageMethod: "Hòa phân bón với nước rồi phun trên lá vào lúc sáng sớm hoặc chiều mát.",
+    pesticideNote: "Pha loãng phân bón lá với nước trước khi pha chung với thuốc BVTV. Không pha chung với thuốc có tính axit mạnh hoặc thuốc chứa đồng (Cu).",
+    usageNotes: [],
     storage: "Nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp.",
-    roleInProgram: "Canxi giai đoạn nuôi trái về sau",
+    roleInProgram: "Canxi kết hợp đạm, hỗ trợ phát triển mô",
     form: "long",
     useGroup: "canxi",
-    cropTags: ["Sầu riêng", "Cây ăn trái", "Cà phê", "Hồ tiêu", "Lúa", "Rau màu"],
+    cropTags: [],
     summary: [
-      "Canxi 17%, không chứa Bo.",
-      "Hỗ trợ chắc trái, chống nứt trái và tăng khả năng bảo quản sau thu hoạch.",
-      "Đang hoàn tất đăng ký lưu hành tại Việt Nam.",
+      "Canxi 7,15% kết hợp đạm tổng số 2%.",
+      "Hỗ trợ phát triển vách tế bào, giảm nứt và rụng trái.",
+      "Tăng độ cứng cáp mô cây.",
     ],
-    keyComposition: "CaO 17%",
+    keyComposition: "Ca 7,15% · N 2%",
     image: "/img/kson-star-fish.png",
     icon: "/img/ic-shield-plant.png",
     relatedServiceSlug: "quy-trinh-cham-soc",
     faqs: [
       {
-        q: "Sản phẩm đã được cấp phép lưu hành chưa?",
-        a: "Đang hoàn tất đăng ký. Chúng tôi sẽ cập nhật số quyết định lưu hành ngay khi có.",
+        q: "Canxi qua lá hấp thu nhanh hơn bón gốc ở điểm nào?",
+        a: "Phun qua lá đưa dưỡng chất trực tiếp tới bộ phận cần, phù hợp khi muốn bổ sung nhanh vào đúng giai đoạn theo bảng liều trên nhãn.",
       },
       {
-        q: "Vì sao chọn Canxi đơn thay vì Canxi – Bo?",
-        a: "Bo dễ gây ngộ độc nếu dùng lặp lại liều cao, trong khi Canxi đơn an toàn hơn khi cần bổ sung nhiều lần.",
+        q: "pH 4,9 có ảnh hưởng khi pha chung với sản phẩm khác không?",
+        a: "Sản phẩm có tính axit nhẹ. Khi pha chung với thuốc bảo vệ thực vật, cần pha loãng với nước trước và không pha chung với thuốc có tính axit mạnh hoặc thuốc chứa đồng (Cu).",
       },
       {
-        q: "Có pha chung với thuốc BVTV được không?",
-        a: "Có thể kết hợp với hầu hết các loại phân bón lá và thuốc bảo vệ thực vật khác, trừ sản phẩm có tính kiềm mạnh.",
-      },
-      {
-        q: "Dùng sau thu hoạch có tác dụng gì?",
-        a: "Phun 1 – 2 lần sau thu hoạch giúp phục hồi cây, chuẩn bị cho vụ tiếp theo.",
+        q: "Dùng chung với Dr. Calcium được không, khác nhau thế nào?",
+        a: "Dr. Calcium có thêm Bo với hàm lượng cao, hỗ trợ giai đoạn ra hoa – đậu trái. Starfish kết hợp Canxi với đạm, hỗ trợ phát triển mô. Vui lòng liên hệ đội kỹ thuật để được tư vấn phối hợp phù hợp với vườn.",
       },
     ],
   },

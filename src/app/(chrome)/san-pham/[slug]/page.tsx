@@ -4,13 +4,19 @@ import { notFound } from "next/navigation";
 import { CtaBlock } from "@/components/cta-block";
 import { ProductGallery } from "@/components/product-gallery";
 import {
+  DosageTableBlock,
+  Highlights,
+  NoticeBox,
+  ProductStickyBar,
+  QuickSpecBar,
+} from "@/components/product-blocks";
+import {
   Breadcrumb,
   Button,
   Card,
   Container,
   Section,
   SectionHeading,
-  StatusTag,
 } from "@/components/ui";
 import { getProduct, products } from "@/content/products";
 import { getService } from "@/content/services";
@@ -39,7 +45,6 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
   const related = getService(product.relatedServiceSlug);
   const others = products.filter((p) => p.slug !== product.slug);
-  const isRegistered = !product.status.toLowerCase().includes("đang hoàn tất");
 
   return (
     <>
@@ -65,40 +70,32 @@ export default async function ProductDetailPage({ params }: PageProps) {
               <h1 className="text-3xl leading-tight font-bold text-brand-900 sm:text-4xl">
                 {product.name}
               </h1>
-              {product.registeredName ? (
-                <p className="mt-2 text-lg text-muted">
-                  Tên lưu hành tại Việt Nam: {product.registeredName}
-                </p>
-              ) : null}
-              {product.line ? (
-                <p className="mt-1 text-lg text-muted">{product.line}</p>
-              ) : null}
-
-              <div className="mt-4">
-                <StatusTag value={product.status} />
-              </div>
-
-              <ul className="mt-6 space-y-3">
-                {product.summary.map((item) => (
-                  <li key={item} className="flex gap-3">
-                    <span aria-hidden="true" className="mt-1 text-brand-500">
-                      ✓
-                    </span>
-                    <span className="text-lg">{item}</span>
+              {/* B2 · Badge — tên đăng ký chỉ xuất hiện ở bảng Hồ sơ pháp lý */}
+              <ul className="mt-4 flex flex-wrap gap-2">
+                {product.badges.map((badge) => (
+                  <li
+                    key={badge}
+                    className="rounded-full bg-brand-100 px-3 py-1.5 font-medium text-brand-700"
+                  >
+                    {badge}
                   </li>
                 ))}
               </ul>
 
-              <dl className="mt-6 space-y-2">
-                <div className="flex flex-wrap gap-x-2">
-                  <dt className="text-muted">Quy cách:</dt>
-                  <dd className="font-medium">{product.packaging}</dd>
-                </div>
-                <div className="flex flex-wrap gap-x-2">
-                  <dt className="text-muted">Giá:</dt>
-                  <dd className="font-semibold text-brand-900">Liên hệ</dd>
-                </div>
-              </dl>
+              <p className="mt-4 text-lg">
+                <span className="text-muted">Giá: </span>
+                <span className="font-semibold text-brand-900">Liên hệ</span>
+              </p>
+
+              {/* B3 · Thanh thông số nhanh */}
+              <div className="mt-6">
+                <QuickSpecBar specs={product.quickSpecs} />
+              </div>
+
+              {/* B4 · Điểm nổi bật */}
+              <div className="mt-6">
+                <Highlights items={product.highlights} />
+              </div>
 
               <div className="mt-7 flex flex-wrap gap-3">
                 <Button href={site.cta.href}>Liên hệ đặt hàng</Button>
@@ -159,68 +156,24 @@ export default async function ProductDetailPage({ params }: PageProps) {
         </div>
       </Section>
 
-      {/* 4 · Đối tượng cây trồng & liều dùng */}
+      {/* B7 · Hướng dẫn sử dụng — bảng nguyên văn nhãn đăng ký */}
       <Section>
-        <SectionHeading
-          eyebrow="Liều dùng"
-          title="Đối tượng cây trồng & liều lượng"
-          lead={product.targetCrops}
-        />
-        <p className="mb-4 font-semibold text-brand-900">
-          Phương thức: <span className="font-normal">{product.applicationMethod}</span>
-        </p>
-        <div className="overflow-x-auto rounded-[18px] border border-line">
-          <table className="w-full min-w-[34rem] border-collapse text-left">
-            <thead>
-              <tr className="bg-brand-50">
-                <th scope="col" className="px-4 py-3 font-semibold text-brand-900">
-                  Đối tượng / Giai đoạn
-                </th>
-                <th scope="col" className="px-4 py-3 font-semibold text-brand-900">
-                  Liều lượng
-                </th>
-                <th scope="col" className="px-4 py-3 font-semibold text-brand-900">
-                  Thời điểm / Tần suất
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {product.dosage.map((row) => (
-                <tr key={row.target} className="border-t border-line align-top">
-                  <td className="px-4 py-3.5 font-medium">{row.target}</td>
-                  <td className="px-4 py-3.5 text-muted">{row.amount}</td>
-                  <td className="px-4 py-3.5 text-muted">{row.timing}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        {product.dosageNote ? (
-          <p className="mt-4 rounded-[18px] border-l-4 border-amber-400 bg-amber-50 p-5 text-amber-900">
-            <strong>Lưu ý:</strong> {product.dosageNote}
-          </p>
+        <SectionHeading eyebrow="Hướng dẫn" title="Hướng dẫn sử dụng" />
+        {product.dosageTable ? (
+          <DosageTableBlock table={product.dosageTable} />
         ) : null}
-      </Section>
-
-      {/* 5 · Hướng dẫn sử dụng & lưu ý */}
-      <Section className="bg-brand-50">
-        <SectionHeading eyebrow="Sử dụng" title="Hướng dẫn & lưu ý" />
-        <ul className="space-y-3">
-          {product.usageNotes.map((note) => (
-            <li
-              key={note}
-              className="flex gap-3 rounded-[18px] border border-line bg-white p-5"
-            >
-              <span aria-hidden="true" className="mt-1 text-brand-500">
-                ✓
-              </span>
-              <span className="text-lg">{note}</span>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-4 rounded-[18px] border border-line bg-white p-5">
-          <strong className="text-brand-900">Bảo quản:</strong> {product.storage}
-        </p>
+        <div className="mt-4 space-y-3">
+          {product.usageMethod ? (
+            <NoticeBox title="Phương pháp sử dụng">
+              {product.usageMethod}
+            </NoticeBox>
+          ) : null}
+          {product.pesticideNote ? (
+            <NoticeBox title="Lưu ý khi pha chung thuốc BVTV">
+              {product.pesticideNote}
+            </NoticeBox>
+          ) : null}
+        </div>
       </Section>
 
       {/* 6 · Xuất xứ & công nghệ sản xuất */}
@@ -233,10 +186,14 @@ export default async function ProductDetailPage({ params }: PageProps) {
             <p className="mt-2 text-muted">Tỉnh Gangwon, Hàn Quốc.</p>
           </Card>
           <Card>
-            <h3 className="text-lg font-bold text-brand-900">Nghiên cứu & công nghệ</h3>
+            <h3 className="text-lg font-bold text-brand-900">Viện nghiên cứu</h3>
+            <p className="mt-2 text-muted">Silicate Crop Research Institute.</p>
+          </Card>
+          <Card>
+            <h3 className="text-lg font-bold text-brand-900">Thương hiệu độc quyền</h3>
             <p className="mt-2 text-muted">
-              Silicate Crop Research Institute. Công nghệ Alkaline hỗ trợ điều
-              hòa pH đất.
+              K-SON — {site.legalName} là đơn vị nhập khẩu và phân phối độc
+              quyền tại Việt Nam.
             </p>
           </Card>
         </div>
@@ -247,24 +204,18 @@ export default async function ProductDetailPage({ params }: PageProps) {
         <SectionHeading eyebrow="Pháp lý" title="Hồ sơ sản phẩm" />
         <div className="rounded-[18px] border border-line bg-white p-6">
           <dl className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
-            {isRegistered ? (
-              <>
-                <Legal label="Mã số phân bón" value={product.fertilizerCode ?? "—"} />
-                <Legal
-                  label="Quyết định lưu hành"
-                  value={product.circulationDecision ?? "—"}
-                />
-              </>
-            ) : (
-              <div className="sm:col-span-2">
-                <dt className="text-sm text-muted">Trạng thái đăng ký</dt>
-                <dd className="mt-1">
-                  <StatusTag value={product.status} />
-                </dd>
-              </div>
-            )}
+            {product.registeredName ? (
+              <Legal label="Tên đăng ký" value={product.registeredName} />
+            ) : null}
+            <Legal
+              label="Số quyết định lưu hành"
+              value={product.circulationDecision ?? "—"}
+            />
+            <Legal label="Mã số phân bón" value={product.fertilizerCode ?? "—"} />
             <Legal label="Đơn vị nhập khẩu & phân phối" value={site.legalName} />
+            <Legal label="Đơn vị sản xuất" value={product.origin} />
             <Legal label="Hạn sử dụng" value={product.shelfLife} />
+            <Legal label="Bảo quản" value={product.storage} />
           </dl>
         </div>
       </Section>
@@ -318,6 +269,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
       </Section>
 
       <CtaBlock />
+
+      {/* Thanh sticky đáy — không có nút mua hàng, web không bán trực tuyến */}
+      <ProductStickyBar zaloHref={site.zaloHref} hotlineHref={site.hotlineHref} />
     </>
   );
 }

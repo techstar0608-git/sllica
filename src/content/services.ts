@@ -100,7 +100,7 @@ export const services: Service[] = [
         [
           "K-SON Soil Conditioner",
           "Cải tạo đất, nâng pH, bổ sung canxi – magie – sắt. Dạng hạt 3 – 5 mm, bao 20 kg. Liều khuyến cáo cho sầu riêng: 4 kg/gốc/vụ.",
-          "Đã đăng ký lưu hành tại Việt Nam (mã 28190)",
+          "Đã đăng ký lưu hành",
         ],
       ],
       note: "Thành phần công bố: Canxi 20%, Magie 1%, Sắt 1.000 ppm, cùng thành phần Alkaline điều hoà pH. Kết quả kiểm nghiệm: không phát hiện Cd, Pb, As, Hg trong sản phẩm.",
@@ -241,9 +241,9 @@ export const services: Service[] = [
     productSlugs: [
       "kson-soil-conditioner",
       "kson-silicate-liquid",
-      "kson-sulfur-silicate-liquid",
+      "kson-sulfur-silicate",
       "kson-dr-calcium",
-      "kson-star-fish",
+      "kson-starfish",
     ],
     products: {
       caption: "Sản phẩm K-SON dùng trong quy trình",
@@ -251,28 +251,28 @@ export const services: Service[] = [
       rows: [
         [
           "K-SON Soil Conditioner",
-          "Cải tạo đất, nâng pH, bổ sung canxi – magie – sắt",
-          "Đã đăng ký lưu hành tại Việt Nam (mã 28190)",
+          "Cải tạo đất, bổ sung canxi – magie – sắt",
+          "Đã đăng ký lưu hành",
         ],
         [
           "K-SON Silicate Liquid",
           "Dinh dưỡng silicate dạng lỏng",
-          "Đã đăng ký cho cây lúa",
+          "Đã đăng ký lưu hành",
         ],
         [
-          "K-SON Sulfur Silicate Liquid",
-          "Dinh dưỡng silicate có lưu huỳnh nguyên tố S⁰",
-          "Đã đăng ký cho cây cà chua",
+          "K-SON Sulfur Silicate",
+          "Dinh dưỡng silicate có lưu huỳnh đơn chất S⁰",
+          "Đã đăng ký lưu hành",
         ],
         [
           "K-SON Dr. Calcium (Ca–B)",
-          "Canxi – Bo, giai đoạn đậu trái đến ~60 ngày sau đậu",
-          "Đang hoàn tất đăng ký",
+          "Canxi – Bo, giai đoạn ra hoa và đậu trái",
+          "Đã đăng ký lưu hành",
         ],
         [
-          "K-SON Star Fish (Ca)",
-          "Canxi giai đoạn nuôi trái về sau",
-          "Đang hoàn tất đăng ký",
+          "K-SON Starfish (Ca)",
+          "Canxi kết hợp đạm, hỗ trợ phát triển mô",
+          "Đã đăng ký lưu hành",
         ],
       ],
       note: "Quy trình của Silica không bắt buộc chủ vườn thay toàn bộ vật tư đang dùng. Silica xây quy trình trên nền vật tư hiện có của vườn và chỉ bổ sung ở những khâu còn thiếu.",
