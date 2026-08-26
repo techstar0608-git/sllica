@@ -99,8 +99,19 @@ export function Button({
       "bg-white text-brand-700 border-2 border-brand-500 hover:bg-brand-50",
     ghost: "bg-brand-900/40 text-white border border-white/40 hover:bg-brand-900/60",
   } as const;
+  const classes = `${base} ${variants[variant]} ${className}`;
+
+  // href dạng tel:/mailto:/http: là link ngoài, next/link không xử lý được.
+  if (/^(tel:|mailto:|https?:)/.test(href)) {
+    return (
+      <a href={href} className={classes}>
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <Link href={href} className={`${base} ${variants[variant]} ${className}`}>
+    <Link href={href} className={classes}>
       {children}
     </Link>
   );

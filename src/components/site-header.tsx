@@ -36,7 +36,7 @@ export function SiteHeader() {
             <NavLink href="/">Trang chủ</NavLink>
             <ServicesMenu />
             <ProductsMenu />
-            <NavLink href="/dang-ky-khao-sat">Khảo sát vườn</NavLink>
+            <NavLink href="/chinh-sach">Chính sách</NavLink>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -46,12 +46,12 @@ export function SiteHeader() {
             >
               {site.hotline}
             </a>
-            <Link
+            <a
               href={site.cta.href}
               className="hidden rounded-full bg-brand-500 px-5 py-2.5 text-base font-semibold text-white hover:bg-brand-700 lg:inline-flex"
             >
               {site.cta.shortLabel}
-            </Link>
+            </a>
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
@@ -98,8 +98,8 @@ export function SiteHeader() {
                   {p.name}
                 </MobileLink>
               ))}
-              <MobileLink href="/dang-ky-khao-sat" onClick={() => setOpen(false)}>
-                Đăng ký khảo sát vườn
+              <MobileLink href="/chinh-sach" onClick={() => setOpen(false)}>
+                Chính sách
               </MobileLink>
             </nav>
           </Container>

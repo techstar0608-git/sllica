@@ -17,12 +17,20 @@ export const site = {
       address: "Thôn Hồ Tiếng, xã Krông Năng, Đắk Lắk",
     },
   ],
-  /** CTA thống nhất toàn site. */
+  /**
+   * Trang /dang-ky-khao-sat và form đăng ký khảo sát đang được ẩn khỏi site:
+   * không còn link trong menu, footer, thanh liên hệ và các khối CTA.
+   * File trang vẫn giữ nguyên — bật lại bằng cách đổi cờ này thành true.
+   */
+  surveyEnabled: false as boolean,
+  /** CTA thống nhất toàn site. Khi ẩn form khảo sát thì CTA gọi thẳng hotline. */
   cta: {
-    label: "Đăng ký khảo sát vườn miễn phí",
-    shortLabel: "Đăng ký khảo sát vườn",
-    href: "/dang-ky-khao-sat",
+    label: "Gọi tư vấn miễn phí",
+    shortLabel: "Gọi tư vấn",
+    href: "tel:0932047055",
   },
+  /** Link chính sách hiển thị ở footer. */
+  policyHref: "/chinh-sach",
   /** Ngày duyệt nội dung — dùng cho dòng "Cập nhật ngày…" ở khối dẫn chiếu pháp luật. */
   contentUpdatedAt: "24/08/2026",
 } as const;

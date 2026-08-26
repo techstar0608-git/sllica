@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { policies } from "@/content/policies";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
 import { Container } from "./ui";
@@ -9,7 +10,7 @@ export function SiteFooter() {
   return (
     <footer className="mt-auto bg-brand-900 text-brand-100">
       <Container className="py-12 sm:py-16">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           <div>
             <span className="inline-flex rounded-lg bg-white px-4 py-3">
               <Image
@@ -80,6 +81,24 @@ export function SiteFooter() {
               </li>
             </ul>
           </div>
+
+          <nav aria-labelledby="footer-policies">
+            <h2 id="footer-policies" className="font-semibold text-white">
+              Chính sách
+            </h2>
+            <ul className="mt-3 space-y-2">
+              {policies.map((p) => (
+                <li key={p.slug}>
+                  <Link
+                    href={`/chinh-sach/${p.slug}`}
+                    className="inline-flex min-h-11 items-center hover:text-white hover:underline"
+                  >
+                    {p.navName}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
           <div>
             <h2 className="font-semibold text-white">Địa điểm</h2>
