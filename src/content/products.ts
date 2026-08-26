@@ -89,10 +89,13 @@ export type Product = {
   keyComposition: string;
   /** Ảnh sản phẩm; để trống thì dùng icon thay thế. */
   image?: string;
+  /**
+   * B1 · Bộ ảnh gallery, thứ tự: ảnh tách nền → ảnh nhãn → ảnh thực tế.
+   * Ảnh tách nền (`-front`) đặt trước để làm ảnh đại diện.
+   */
+  gallery?: string[];
   /** Icon dùng khi chưa có ảnh chụp sản phẩm. */
   icon: string;
-  /** Ảnh mặt sau bao bì, nếu có. */
-  imageBack?: string;
   /** Slug dịch vụ liên quan (mục 3.7 §9). */
   relatedServiceSlug: string;
   faqs: { q: string; a: string }[];
@@ -172,8 +175,14 @@ export const products: Product[] = [
       "Không phát hiện kim loại nặng As, Cd, Hg, Pb.",
     ],
     keyComposition: "Ca 20% · Mg 1% · Fe 1.000 ppm",
-    image: "/img/kson-soil-conditioner.png",
-    imageBack: "/img/kson-soil-conditioner-back.png",
+    image: "/img/kson-soil-conditioner-front.png",
+    gallery: [
+      "/img/kson-soil-conditioner-front.png",
+      "/img/kson-soil-conditioner.png",
+      "/img/kson-soil-conditioner-back.png",
+      "/img/kson-soil-conditioner-pair.png",
+      "/img/kson-soil-conditioner-bags.jpg",
+    ],
     icon: "/img/ic-soil.png",
     relatedServiceSlug: "suc-khoe-dat",
     faqs: [
@@ -281,7 +290,11 @@ export const products: Product[] = [
       "Hỗ trợ cây chống sốc nhiệt, chống hạn.",
     ],
     keyComposition: "SiO₂ₕₕ 23%",
-    image: "/img/kson-silicate-liquid.png",
+    image: "/img/kson-silicate-liquid-front.png",
+    gallery: [
+      "/img/kson-silicate-liquid-front.png",
+      "/img/kson-silicate-liquid.png",
+    ],
     icon: "/img/ic-magleaf.png",
     relatedServiceSlug: "quy-trinh-cham-soc",
     faqs: [
@@ -389,7 +402,11 @@ export const products: Product[] = [
       "Không chứa hoạt chất thuốc bảo vệ thực vật.",
     ],
     keyComposition: "S 16% · SiO₂ₕₕ 15%",
-    image: "/img/kson-sulfur-silicate-liquid.png",
+    image: "/img/kson-sulfur-silicate-front.png",
+    gallery: [
+      "/img/kson-sulfur-silicate-front.png",
+      "/img/kson-sulfur-silicate.png",
+    ],
     icon: "/img/ic-bio.png",
     relatedServiceSlug: "quy-trinh-cham-soc",
     faqs: [
@@ -485,7 +502,11 @@ export const products: Product[] = [
       "pH trung tính, an toàn khi phun lá.",
     ],
     keyComposition: "Ca 10% · B 11.000 ppm",
-    image: "/img/kson-dr-calcium.png",
+    image: "/img/kson-dr-calcium-front.png",
+    gallery: [
+      "/img/kson-dr-calcium-front.png",
+      "/img/kson-dr-calcium.png",
+    ],
     icon: "/img/ic-apple.png",
     relatedServiceSlug: "quy-trinh-cham-soc",
     faqs: [
@@ -586,7 +607,11 @@ export const products: Product[] = [
       "Tăng độ cứng cáp mô cây.",
     ],
     keyComposition: "Ca 7,15% · N 2%",
-    image: "/img/kson-star-fish.png",
+    image: "/img/kson-starfish-front.png",
+    gallery: [
+      "/img/kson-starfish-front.png",
+      "/img/kson-starfish.png",
+    ],
     icon: "/img/ic-shield-plant.png",
     relatedServiceSlug: "quy-trinh-cham-soc",
     faqs: [

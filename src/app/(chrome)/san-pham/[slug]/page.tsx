@@ -61,9 +61,11 @@ export default async function ProductDetailPage({ params }: PageProps) {
           <div className="mt-6 grid gap-10 lg:grid-cols-2">
             <ProductGallery
               alt={product.name}
-              images={[product.image ?? product.icon, product.imageBack].filter(
-                (src): src is string => Boolean(src),
-              )}
+              images={
+                product.gallery?.length
+                  ? product.gallery
+                  : [product.image ?? product.icon]
+              }
             />
 
             <div>
