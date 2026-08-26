@@ -24,12 +24,14 @@ trả về và **mất luôn**.
 2. **Add a domain** → nhập `silica.vn` → chọn gói **Free**
 3. Cloudflare tự quét DNS hiện có. **Quét tự động thường sót bản ghi** —
    phải đối chiếu với file Xuất ở Bước 2.
-4. Cloudflare cấp 2 nameserver, dạng:
+4. **ĐÃ XONG (26/08/2026).** Zone ID: `b9806e92b154c18a89efe28ae4aa369a`
+   Account: `723e3606077cdf9c3f9e3585fb4397ce` (đúng tài khoản chứa worker sllica)
+
+   Nameserver Cloudflare cấp:
    ```
-   xxx.ns.cloudflare.com
-   yyy.ns.cloudflare.com
+   beau.ns.cloudflare.com
+   isla.ns.cloudflare.com
    ```
-   Ghi lại, dùng ở Bước 3.
 
 ---
 
@@ -67,6 +69,27 @@ vừa xuất. Thiếu cái nào thêm vào:
 
 > 🔑 **Toàn bộ bản ghi email để "DNS only" (mây xám), KHÔNG bật proxy (mây cam).**
 > Bật proxy cho MX là email chết.
+
+### ✅ Đã kiểm tra thực tế zone Cloudflare (26/08/2026)
+
+Truy vấn thẳng `beau.ns.cloudflare.com` cho kết quả:
+
+| Bản ghi | Trạng thái |
+|---|---|
+| MX mx1/mx2/mx3.larksuite.com | ✅ đã có |
+| TXT SPF | ✅ đã có |
+| TXT mã xác minh Lark | ✅ đã có |
+| TXT _dmarc | ✅ đã có |
+| **TXT lark2603050413._domainkey (DKIM)** | ❌ **THIẾU — phải thêm tay** |
+
+Quét tự động của Cloudflare bỏ sót DKIM (chuỗi quá dài). Thiếu bản ghi này
+email vẫn gửi nhận được nhưng mất chữ ký, dễ bị đánh dấu spam.
+
+**Cách thêm:** DNS > Records > Add record
+- Type: `TXT`
+- Name: `lark2603050413._domainkey`
+- Content: copy chuỗi DKIM từ file Xuất của Hostinger (bắt đầu `v=DKIM1; k=rsa; p=...`)
+- TTL: Auto · Proxy: không áp dụng với TXT
 
 **Chưa thêm** ALIAS `@` và CNAME `www` của Hostinger — web mới sẽ tự tạo ở Bước 5.
 
