@@ -90,8 +90,11 @@ export type Product = {
   /** Ảnh sản phẩm; để trống thì dùng icon thay thế. */
   image?: string;
   /**
-   * B1 · Bộ ảnh gallery, thứ tự: ảnh tách nền → ảnh nhãn → ảnh thực tế.
-   * Ảnh tách nền (`-front`) đặt trước để làm ảnh đại diện.
+   * B1 · Bộ ảnh gallery.
+   * 4 sản phẩm dạng chai chỉ dùng ảnh đã tách nền (`-front`): ảnh chụp bao bì
+   * gốc Hàn Quốc bị ẩn theo yêu cầu ngày 27/08/2026 vì chưa dán nhãn phụ
+   * tiếng Việt — xem docs/RUI_RO_ANH_BAO_BI_KSON.md.
+   * Riêng Soil Conditioner giữ đủ bộ ảnh theo yêu cầu của khách.
    */
   gallery?: string[];
   /** Icon dùng khi chưa có ảnh chụp sản phẩm. */
@@ -293,7 +296,6 @@ export const products: Product[] = [
     image: "/img/kson-silicate-liquid-front.png",
     gallery: [
       "/img/kson-silicate-liquid-front.png",
-      "/img/kson-silicate-liquid.png",
     ],
     icon: "/img/ic-magleaf.png",
     relatedServiceSlug: "quy-trinh-cham-soc",
@@ -405,7 +407,6 @@ export const products: Product[] = [
     image: "/img/kson-sulfur-silicate-front.png",
     gallery: [
       "/img/kson-sulfur-silicate-front.png",
-      "/img/kson-sulfur-silicate.png",
     ],
     icon: "/img/ic-bio.png",
     relatedServiceSlug: "quy-trinh-cham-soc",
@@ -505,7 +506,6 @@ export const products: Product[] = [
     image: "/img/kson-dr-calcium-front.png",
     gallery: [
       "/img/kson-dr-calcium-front.png",
-      "/img/kson-dr-calcium.png",
     ],
     icon: "/img/ic-apple.png",
     relatedServiceSlug: "quy-trinh-cham-soc",
@@ -610,7 +610,6 @@ export const products: Product[] = [
     image: "/img/kson-starfish-front.png",
     gallery: [
       "/img/kson-starfish-front.png",
-      "/img/kson-starfish.png",
     ],
     icon: "/img/ic-shield-plant.png",
     relatedServiceSlug: "quy-trinh-cham-soc",

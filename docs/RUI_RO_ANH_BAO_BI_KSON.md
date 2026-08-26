@@ -1,14 +1,20 @@
 # Rủi ro tuân thủ — ảnh bao bì gốc Hàn Quốc
 
 **Ngày ghi nhận:** 27/08/2026
-**Quyết định:** Anh Hữu chọn dùng ảnh ngay, chấp nhận rủi ro.
-**Cần:** pháp chế rà lại trước khi chạy quảng cáo diện rộng.
+**Quyết định ban đầu:** dùng ảnh ngay, chấp nhận rủi ro.
+**Cập nhật 27/08/2026:** đã ẩn ảnh chụp bao bì gốc trên 4 sản phẩm dạng chai,
+chỉ còn hiển thị ảnh đã tách nền. Riêng K-SON Soil Conditioner giữ đủ bộ ảnh
+theo yêu cầu của khách — **mục 3 dưới đây vẫn còn hiệu lực**.
+**Cần:** pháp chế rà lại mục 3 trước khi chạy quảng cáo diện rộng.
 
 Bộ ảnh sản phẩm (bản tách nền, tải 26/08/2026) là **ảnh bao bì gốc Hàn Quốc,
 chưa dán nhãn phụ tiếng Việt**. Nội dung in trên bao bì mâu thuẫn với một số
 nguyên tắc tại Phần III của BRIEF_TRANG_CHI_TIET_SAN_PHAM_KSON.md.
 
-## 1. Chai Sulfur Silicate — in tên 8 loại sâu bệnh
+## ✅ 1. Chai Sulfur Silicate — in tên 8 loại sâu bệnh (ĐÃ XỬ LÝ)
+
+> Ảnh chụp bao bì gốc đã được ẩn khỏi trang, chỉ còn ảnh tách nền. Nội dung
+> dưới đây giữ lại để tham chiếu khi chọn ảnh mới.
 
 Mặt trước in dãy tên sâu bệnh kèm dấu tích:
 
@@ -26,13 +32,18 @@ Mặt trước in dãy tên sâu bệnh kèm dấu tích:
 Đây đúng là 8 loại đã được gỡ khỏi phần chữ theo brief (ngôn ngữ thuộc phạm vi
 thuốc BVTV). Ảnh khiến nội dung này vẫn hiển thị trên trang, dưới dạng hình.
 
-## 2. Chữ "hữu cơ" trên 3 chai
+## ✅ 2. Chữ "hữu cơ" trên 3 chai (ĐÃ XỬ LÝ)
+
+> Cả 3 chai nay chỉ hiển thị ảnh tách nền.
 
 Sulfur Silicate, Silicate Liquid và Dr. Calcium đều in **유기농업자재**
 (vật tư nông nghiệp hữu cơ). Brief mục 2 không dùng từ "hữu cơ" cho sản phẩm
 phân bón.
 
-## 3. Bao Soil Conditioner — hàm lượng lệch nhãn phụ VN
+## ⚠️ 3. Bao Soil Conditioner — hàm lượng lệch nhãn phụ VN (CÒN HIỆU LỰC)
+
+> Sản phẩm này giữ đủ bộ ảnh theo yêu cầu của khách, nên rủi ro dưới đây
+> **vẫn đang hiện trên web**.
 
 Bao in **규산 25%, 칼슘 40%, 마그네슘 2%** = Silic 25%, Canxi 40%, Magie 2%.
 
