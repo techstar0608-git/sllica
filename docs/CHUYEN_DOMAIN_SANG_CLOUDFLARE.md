@@ -95,15 +95,66 @@ email vẫn gửi nhận được nhưng mất chữ ký, dễ bị đánh dấu
 
 ---
 
-## Bước 4 — Đổi nameserver tại Hostinger
+## Bước 4 — Dọn bản ghi web cũ + thêm Custom Domain
 
-Chỉ làm khi Bước 3 đã xong.
+**Quyết định (26/08/2026):** thay hẳn web cũ → xoá bản ghi Hostinger ngay.
+Bỏ qua TXT `demo` (subdomain không còn dùng).
+
+### 4a. Xoá 5 bản ghi trỏ Hostinger
+
+Cloudflare quét tự động đã tạo và **bật Proxy (mây cam)** cho các bản ghi sau.
+Để nguyên sẽ gây lỗi SSL và xung đột với Custom Domain của worker.
+
+| Name       | Type  | Content                     |
+|------------|-------|-----------------------------|
+| silica.vn  | A     | 148.135.128.254             |
+| silica.vn  | A     | 77.37.76.251                |
+| silica.vn  | AAAA  | 2a02:4780:4f:c523:f9e8:612b:bfd5:6b |
+| silica.vn  | AAAA  | 2a02:4780:4e:34cf:1ef3:a67f:743c:9c3b |
+| www        | CNAME | www.silica.vn.cdn.hstgr.net |
+
+→ Tick chọn cả 5 dòng → **Delete**.
+
+> **Giữ nguyên** toàn bộ MX và TXT — đó là email, không được đụng.
+
+### 4b. Thêm DKIM còn thiếu
+
+**Add record** → Type `TXT` · Name `lark2603050413._domainkey`
+· Content: chuỗi DKIM copy từ file **Xuất** của Hostinger.
+
+### 4c. Thêm Custom Domain vào worker (làm LUÔN, trước khi đổi NS)
+
+Worker nhận Custom Domain được cả khi zone còn *pending*. Làm trước để khi
+nameserver có hiệu lực là web mới lên ngay, không có khoảng trống.
+
+1. **Workers & Pages** → worker **`sllica`**
+2. **Settings** → **Domains & Routes** → **Add** → **Custom Domain**
+3. Thêm `silica.vn`, rồi thêm tiếp `www.silica.vn`
+
+Cloudflare tự tạo bản ghi và cấp SSL.
+
+### Checklist trước khi sang Bước 5
+
+- [ ] Đã xoá 5 bản ghi A/AAAA/CNAME trỏ Hostinger
+- [ ] Đã thêm TXT DKIM `lark2603050413._domainkey`
+- [ ] MX ×3 còn nguyên, để **DNS only**
+- [ ] TXT SPF + xác minh Lark + _dmarc còn nguyên
+- [ ] Đã thêm Custom Domain `silica.vn` và `www.silica.vn` vào worker
+
+---
+
+## Bước 5 — Đổi nameserver tại Hostinger
+
+Chỉ làm khi checklist Bước 4 đã xong hết.
 
 1. Đăng nhập Hostinger → **Domains** → chọn `silica.vn`
 2. Vào **DNS / Nameservers**
 3. Chọn **Change nameservers** → **Use custom nameservers**
-4. Xoá NS cũ (`athena.dns-parking.com`, `apollo.dns-parking.com`),
-   dán 2 NS Cloudflare ở Bước 1
+4. Xoá NS cũ (`athena.dns-parking.com`, `apollo.dns-parking.com`), dán:
+   ```
+   beau.ns.cloudflare.com
+   isla.ns.cloudflare.com
+   ```
 5. Lưu lại
 
 Thời gian có hiệu lực: thường 15 phút – 2 giờ, tối đa 24 giờ.
@@ -111,20 +162,8 @@ Cloudflare gửi email khi domain chuyển sang trạng thái **Active**.
 
 ---
 
-## Bước 5 — Trỏ domain về web mới
-
-Chỉ làm khi Cloudflare báo domain **Active**.
-
-1. Dashboard → **Workers & Pages** → chọn worker **`sllica`**
-2. Tab **Settings** → **Domains & Routes** → **Add** → **Custom Domain**
-3. Thêm lần lượt:
-   - `silica.vn`
-   - `www.silica.vn`
-4. Cloudflare **tự tạo bản ghi và tự cấp SSL**. Không cần tự thêm A/CNAME.
-
-> Sau khi thêm xong, vào DNS > Records **xoá** ALIAS `@` → `silica.vn.cdn.hstgr.net`
-> và CNAME `www` → `www.silica.vn.cdn.hstgr.net` nếu chúng được copy sang.
-> Để lại sẽ tranh chấp với bản ghi Cloudflare tự tạo.
+> ⚠️ **Tránh khung 09:00–10:00 UTC Thứ Bảy 29/08/2026** (16:00–17:00 giờ VN) —
+> Cloudflare bảo trì, thay đổi cấu hình có thể lỗi.
 
 ---
 
